@@ -72,7 +72,12 @@ export default function App() {
       <View style={styles.topWrapper}>
         <View style={styles.headerWrapper}>
           <Text style={styles.heading}>TODO APP</Text>
-          <TouchableOpacity disabled={todo.length < 1}>
+          <TouchableOpacity
+            disabled={todo.length < 1}
+            onPress={() => {
+              setTodo([]);
+            }}
+          >
             <Icon
               name="delete"
               size={24}
@@ -80,7 +85,7 @@ export default function App() {
             />
           </TouchableOpacity>
         </View>
-        {/* FLatList */}
+        {/* FlatList */}
         <FlatList
           style={styles.flatList}
           showsVerticalScrollIndicator={false}
