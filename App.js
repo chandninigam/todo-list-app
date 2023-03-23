@@ -58,12 +58,19 @@ export default function App() {
       getData();
     };
   }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.topWrapper}>
         <View style={styles.headerWrapper}>
           <Text style={styles.heading}>TODO APP</Text>
-          <Icon name="delete" size={24} color="red" />
+          <TouchableOpacity disabled={todo.length < 1}>
+            <Icon
+              name="delete"
+              size={24}
+              color={todo.length < 1 ? "#8a8a8a" : "red"}
+            />
+          </TouchableOpacity>
         </View>
         {/* FLatList */}
         <FlatList
