@@ -11,14 +11,13 @@ import {
 } from "react-native";
 import { AntDesign as Icon } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height, width } = Dimensions.get("window");
 
 export default function App() {
-  const [todo, setTodo] = useState([
-    { id: 1, title: "First Todo" },
-    { id: 2, title: "Second Todo" },
-  ]);
+  const [todo, setTodo] = useState([]);
+  const [input, setInput] = useState("");
   // const [loaded] = useFonts({
   //   sans: require("./assets/fonts/sans.ttf"),
   // });
@@ -27,10 +26,28 @@ export default function App() {
   //   return null;
   // }
 
+  const dataSet = async () => {
+    try {
+      await AsyncStorage.setItem("appdata", todo);
+    } catch (err) {
+      console.log("err-->", err);
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const data = await AsyncStorage.getItem("appdata");
+      console.log("data", data);
+      setTodo(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   function ListTodo({ todo }) {
     return (
       <View style={listStyles.container}>
-        <Text style={{ color: "black", fontSize: 20 }}>{todo.title}</Text>
+        <Text style={{ color: "black", fontSize: 20 }}>{todo}</Text>
       </View>
     );
   }
@@ -38,6 +55,7 @@ export default function App() {
   useEffect(() => {
     () => {
       StatusBar.setBarStyle("dark-content");
+      getData();
     };
   }, []);
   return (
@@ -57,8 +75,22 @@ export default function App() {
         />
       </View>
       <View style={styles.bottomWrapper}>
-        <TextInput placeholder="Add Todo" style={styles.inputTodo} />
-        <TouchableOpacity style={styles.addTodoBtn}>
+        <TextInput
+          placeholder="Add Todo"
+          style={styles.inputTodo}
+          defaultValue={input}
+          onChangeText={(value) => {
+            setInput(value);
+          }}
+        />
+        <TouchableOpacity
+          style={styles.addTodoBtn}
+          onPress={() => {
+            setTodo((prev) => [...prev, input]);
+            dataSet;
+            setInput("");
+          }}
+        >
           <Icon name="plus" size={32} style={styles.addIcon} color="white" />
         </TouchableOpacity>
       </View>
