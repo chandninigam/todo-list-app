@@ -44,10 +44,18 @@ export default function App() {
     }
   };
 
-  function ListTodo({ todo }) {
+  function ListTodo({ item }) {
     return (
       <View style={listStyles.container}>
-        <Text style={{ color: "black", fontSize: 20 }}>{todo}</Text>
+        <Text style={listStyles.listText}>{item}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            const filterTodo = todo.filter((each) => each !== item);
+            setTodo(filterTodo);
+          }}
+        >
+          <Icon name="delete" size={24} color="red" />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -78,7 +86,7 @@ export default function App() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
           data={todo}
-          renderItem={({ item }) => <ListTodo todo={item} />}
+          renderItem={({ item }) => <ListTodo item={item} />}
         />
       </View>
       <View style={styles.bottomWrapper}>
@@ -181,6 +189,8 @@ const styles = StyleSheet.create({
 
 const listStyles = StyleSheet.create({
   container: {
+    display: "flex",
+    flexDirection: "row",
     padding: height / 64,
     backgroundColor: "white",
     marginBottom: height / 40,
@@ -192,5 +202,10 @@ const listStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 2,
+  },
+  listText: {
+    color: "black",
+    fontSize: 20,
+    flex: 1,
   },
 });
