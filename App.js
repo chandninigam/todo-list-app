@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 import { AntDesign as Icon } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
@@ -83,8 +84,21 @@ export default function App() {
           <TouchableOpacity
             disabled={todo.length < 1}
             onPress={() => {
-              setTodo([]);
-              getDeleteAllList;
+              Alert.alert("Delete All", "Do you really want to delete?", [
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("cancel"),
+                  style: "cancel",
+                },
+                {
+                  text: "Delete",
+                  onPress: () => {
+                    setTodo([]);
+                    getDeleteAllList;
+                  },
+                  style: "destructive",
+                },
+              ]);
             }}
           >
             <Icon
@@ -116,6 +130,8 @@ export default function App() {
           onSubmitEditing={() => {
             // called only when multiline is false
             setTodo((prev) => [...prev, input]);
+            dataSet;
+            setInput("");
           }}
         />
         <TouchableOpacity
