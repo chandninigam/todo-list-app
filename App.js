@@ -34,6 +34,14 @@ export default function App() {
     }
   };
 
+  const getDeleteAllList = async () => {
+    try {
+      await AsyncStorage.removeItem("appdata");
+    } catch (err) {
+      console.log("error", console.error);
+    }
+  };
+
   const getData = async () => {
     try {
       const data = await AsyncStorage.getItem("appdata");
@@ -76,6 +84,7 @@ export default function App() {
             disabled={todo.length < 1}
             onPress={() => {
               setTodo([]);
+              getDeleteAllList;
             }}
           >
             <Icon
@@ -99,8 +108,14 @@ export default function App() {
           placeholder="Add Todo"
           style={styles.inputTodo}
           defaultValue={input}
+          autoCorrect={false}
+          returnKeyType="done"
           onChangeText={(value) => {
             setInput(value);
+          }}
+          onSubmitEditing={() => {
+            // called only when multiline is false
+            setTodo((prev) => [...prev, input]);
           }}
         />
         <TouchableOpacity
