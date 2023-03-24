@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   View,
   Alert,
@@ -12,13 +12,14 @@ import {
 import { AntDesign as Icon } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Context } from "../context/main";
 
 const { height } = Dimensions.get("window");
 
 export function Todo() {
-  const [todo, setTodo] = useState([]);
+  const { todos, setTodos, setCompleteTodos } = useContext(Context);
   const [input, setInput] = useState("");
-  const [completeTodo, setCompleteTodo] = useState([]);
+
   // const [loaded] = useFonts({
   //   sans: require("./assets/fonts/sans.ttf"),
   // });
@@ -35,7 +36,7 @@ export function Todo() {
       {
         text: "Delete",
         onPress: () => {
-          setTodo([]);
+          setTodos([]);
           getDeleteAllList;
         },
         style: "destructive",
@@ -44,7 +45,7 @@ export function Todo() {
   }
 
   function onPressListDeleteIcon(item) {
-    const filterTodo = todo.filter((each) => each !== item);
+    const filterTodo = todos.filter((each) => each !== item);
     Alert.alert("Delete", `Do you really want to delete ${`"${item}"`} ?`, [
       {
         text: "Cancel",
@@ -53,7 +54,7 @@ export function Todo() {
       {
         text: "Delete",
         onPress: () => {
-          setTodo(filterTodo);
+          setTodos(filterTodo);
         },
         style: "destructive",
       },
@@ -61,7 +62,7 @@ export function Todo() {
   }
 
   function addTodoToList() {
-    setTodo((prev) => [...prev, input]);
+    setTodos((prev) => [...prev, input]);
     dataSet;
     setInput("");
   }
@@ -75,7 +76,7 @@ export function Todo() {
       {
         text: "Completed",
         onPress: () => {
-          setCompleteTodo((prev) => [...prev, item]);
+          setCompleteTodos((prev) => [...prev, item]);
         },
         style: "default",
       },
@@ -101,7 +102,7 @@ export function Todo() {
   const getData = async () => {
     try {
       const data = await AsyncStorage.getItem("appdata");
-      setTodo(data);
+      setTodos(data);
     } catch (err) {
       console.log(err);
     }
@@ -145,13 +146,13 @@ export function Todo() {
         <View style={styles.headerWrapper}>
           <Text style={styles.heading}>TODO APP</Text>
           <TouchableOpacity
-            disabled={todo.length < 1}
+            disabled={todos.length < 1}
             onPress={onPressAllDeleteIcon}
           >
             <Icon
               name="delete"
               size={24}
-              color={todo.length < 1 ? "#8a8a8a" : "red"}
+              color={todos.length < 1 ? "#8a8a8a" : "red"}
             />
           </TouchableOpacity>
         </View>
@@ -160,7 +161,7 @@ export function Todo() {
           style={styles.flatList}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
-          data={todo}
+          data={todos}
           renderItem={({ item }) => <ListTodo item={item} />}
         />
       </View>

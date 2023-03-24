@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  useContext,
+} from "react-native";
+import { Context } from "../context/main";
 
 const { height } = Dimensions.get("window");
 
