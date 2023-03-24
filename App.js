@@ -26,6 +26,45 @@ export default function App() {
   // if (!loaded) {
   //   return null;
   // }
+  function onPressAllDeleteIcon() {
+    Alert.alert("Delete All", "Do you really want to delete all?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          setTodo([]);
+          getDeleteAllList;
+        },
+        style: "destructive",
+      },
+    ]);
+  }
+
+  function onPressListDeleteIcon(item) {
+    const filterTodo = todo.filter((each) => each !== item);
+    Alert.alert("Delete", `Do you really want to delete ${`"${item}"`} ?`, [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          setTodo(filterTodo);
+        },
+        style: "destructive",
+      },
+    ]);
+  }
+
+  function addTodoToList() {
+    setTodo((prev) => [...prev, input]);
+    dataSet;
+    setInput("");
+  }
 
   const dataSet = async () => {
     try {
@@ -46,7 +85,6 @@ export default function App() {
   const getData = async () => {
     try {
       const data = await AsyncStorage.getItem("appdata");
-      console.log("data", data);
       setTodo(data);
     } catch (err) {
       console.log(err);
@@ -59,8 +97,7 @@ export default function App() {
         <Text style={listStyles.listText}>{item}</Text>
         <TouchableOpacity
           onPress={() => {
-            const filterTodo = todo.filter((each) => each !== item);
-            setTodo(filterTodo);
+            onPressListDeleteIcon(item);
           }}
         >
           <Icon name="delete" size={24} color="red" />
@@ -78,28 +115,13 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      {/* HEADER */}
       <View style={styles.topWrapper}>
         <View style={styles.headerWrapper}>
           <Text style={styles.heading}>TODO APP</Text>
           <TouchableOpacity
             disabled={todo.length < 1}
-            onPress={() => {
-              Alert.alert("Delete All", "Do you really want to delete?", [
-                {
-                  text: "Cancel",
-                  onPress: () => console.log("cancel"),
-                  style: "cancel",
-                },
-                {
-                  text: "Delete",
-                  onPress: () => {
-                    setTodo([]);
-                    getDeleteAllList;
-                  },
-                  style: "destructive",
-                },
-              ]);
-            }}
+            onPress={onPressAllDeleteIcon}
           >
             <Icon
               name="delete"
@@ -108,7 +130,7 @@ export default function App() {
             />
           </TouchableOpacity>
         </View>
-        {/* FlatList */}
+        {/* FLATLIST */}
         <FlatList
           style={styles.flatList}
           showsVerticalScrollIndicator={false}
@@ -117,6 +139,7 @@ export default function App() {
           renderItem={({ item }) => <ListTodo item={item} />}
         />
       </View>
+      {/* FOOTER */}
       <View style={styles.bottomWrapper}>
         <TextInput
           placeholder="Add Todo"
@@ -127,21 +150,10 @@ export default function App() {
           onChangeText={(value) => {
             setInput(value);
           }}
-          onSubmitEditing={() => {
-            // called only when multiline is false
-            setTodo((prev) => [...prev, input]);
-            dataSet;
-            setInput("");
-          }}
+          // called only when multiline is false
+          onSubmitEditing={addTodoToList}
         />
-        <TouchableOpacity
-          style={styles.addTodoBtn}
-          onPress={() => {
-            setTodo((prev) => [...prev, input]);
-            dataSet;
-            setInput("");
-          }}
-        >
+        <TouchableOpacity style={styles.addTodoBtn} onPress={addTodoToList}>
           <Icon name="plus" size={32} style={styles.addIcon} color="white" />
         </TouchableOpacity>
       </View>
