@@ -13,10 +13,13 @@ import {
 import { AntDesign as Icon } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const { height, width } = Dimensions.get("window");
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function App() {
+const BottomTab = createBottomTabNavigator();
+
+function Todo() {
   const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
   // const [loaded] = useFonts({
@@ -158,6 +161,49 @@ export default function App() {
         </TouchableOpacity>
       </View>
     </View>
+  );
+}
+
+function Completed() {
+  return (
+    <View>
+      <Text>Completed</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomTab.Navigator
+        screenOptions={{
+          tabBarLabelPosition: "beside-icon",
+          tabBarLabelStyle: {
+            fontWeight: "700",
+            fontSize: 24,
+          },
+          tabBarIconStyle: { display: "none" },
+        }}
+        tabBarOptions={{
+          activeBackgroundColor: "#548af0",
+          activeTintColor: "white",
+          inactiveTintColor: "black",
+          indicatorStyle: { backgroundColor: "blue", height: "100%" },
+          pressOpacity: 1,
+        }}
+      >
+        <BottomTab.Screen
+          name="Todo"
+          component={Todo}
+          options={{ headerShown: false }}
+        />
+        <BottomTab.Screen
+          name="Completed"
+          component={Completed}
+          options={{ headerShown: false }}
+        />
+      </BottomTab.Navigator>
+    </NavigationContainer>
   );
 }
 
