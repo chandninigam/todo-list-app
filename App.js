@@ -60,7 +60,24 @@ export default function App() {
         <TouchableOpacity
           onPress={() => {
             const filterTodo = todo.filter((each) => each !== item);
-            setTodo(filterTodo);
+
+            Alert.alert(
+              "Delete",
+              `Do you really want to delete ${`"${item}"`} ?`,
+              [
+                {
+                  text: "Cancel",
+                  style: "cancel",
+                },
+                {
+                  text: "Delete",
+                  onPress: () => {
+                    setTodo(filterTodo);
+                  },
+                  style: "destructive",
+                },
+              ]
+            );
           }}
         >
           <Icon name="delete" size={24} color="red" />
