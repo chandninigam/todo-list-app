@@ -60,7 +60,6 @@ export default function App() {
         <TouchableOpacity
           onPress={() => {
             const filterTodo = todo.filter((each) => each !== item);
-
             Alert.alert(
               "Delete",
               `Do you really want to delete ${`"${item}"`} ?`,
