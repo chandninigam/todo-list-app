@@ -175,9 +175,33 @@ function Completed() {
 export default function App() {
   return (
     <NavigationContainer>
-      <BottomTab.Navigator>
-        <BottomTab.Screen name="Todo" component={Todo} />
-        <BottomTab.Screen name="Completed" component={Completed} />
+      <BottomTab.Navigator
+        screenOptions={{
+          tabBarLabelPosition: "beside-icon",
+          tabBarLabelStyle: {
+            fontWeight: "700",
+            fontSize: 24,
+          },
+          tabBarIconStyle: { display: "none" },
+        }}
+        tabBarOptions={{
+          activeBackgroundColor: "#548af0",
+          activeTintColor: "white",
+          inactiveTintColor: "black",
+          indicatorStyle: { backgroundColor: "blue", height: "100%" },
+          pressOpacity: 1,
+        }}
+      >
+        <BottomTab.Screen
+          name="Todo"
+          component={Todo}
+          options={{ headerShown: false }}
+        />
+        <BottomTab.Screen
+          name="Completed"
+          component={Completed}
+          options={{ headerShown: false }}
+        />
       </BottomTab.Navigator>
     </NavigationContainer>
   );
