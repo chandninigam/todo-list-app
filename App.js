@@ -13,10 +13,13 @@ import {
 import { AntDesign as Icon } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const { height, width } = Dimensions.get("window");
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function App() {
+const BottomTab = createBottomTabNavigator();
+
+function Todo() {
   const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
   // const [loaded] = useFonts({
@@ -158,6 +161,25 @@ export default function App() {
         </TouchableOpacity>
       </View>
     </View>
+  );
+}
+
+function Completed() {
+  return (
+    <View>
+      <Text>Completed</Text>
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomTab.Navigator>
+        <BottomTab.Screen name="Todo" component={Todo} />
+        <BottomTab.Screen name="Completed" component={Completed} />
+      </BottomTab.Navigator>
+    </NavigationContainer>
   );
 }
 
