@@ -22,6 +22,7 @@ const BottomTab = createBottomTabNavigator();
 function Todo() {
   const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
+  const [completeTodo, setCompleteTodo] = useState([]);
   // const [loaded] = useFonts({
   //   sans: require("./assets/fonts/sans.ttf"),
   // });
@@ -69,6 +70,22 @@ function Todo() {
     setInput("");
   }
 
+  function onPressCompleteIcon(item) {
+    Alert.alert("Completed", `Congratulations for completeing "${item}" task`, [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Completed",
+        onPress: () => {
+          setCompleteTodo((prev) => [...prev, item]);
+        },
+        style: "default",
+      },
+    ]);
+  }
+
   const dataSet = async () => {
     try {
       await AsyncStorage.setItem("appdata", todo);
@@ -99,11 +116,20 @@ function Todo() {
       <View style={listStyles.container}>
         <Text style={listStyles.listText}>{item}</Text>
         <TouchableOpacity
+          style={listStyles.checkIcon}
+          onPress={() => {
+            onPressCompleteIcon(item);
+          }}
+        >
+          <Icon name="checkcircleo" size={24} color="green" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={listStyles.deleteIcon}
           onPress={() => {
             onPressListDeleteIcon(item);
           }}
         >
-          <Icon name="delete" size={24} color="red" />
+          <Icon name="delete" size={20} color="red" />
         </TouchableOpacity>
       </View>
     );
@@ -166,8 +192,10 @@ function Todo() {
 
 function Completed() {
   return (
-    <View>
-      <Text>Completed</Text>
+    <View style={completeTabStyle.wrapper}>
+      <View style={completeTabStyle.header}>
+        <Text style={completeTabStyle.headingText}>Completed</Text>
+      </View>
     </View>
   );
 }
@@ -183,11 +211,9 @@ export default function App() {
             fontSize: 24,
           },
           tabBarIconStyle: { display: "none" },
-        }}
-        tabBarOptions={{
-          activeBackgroundColor: "#548af0",
-          activeTintColor: "white",
-          inactiveTintColor: "black",
+          tabBarActiveTintColor: "white",
+          tabBarInactiveTintColor: "black",
+          tabBarActiveBackgroundColor: "#548af0",
           indicatorStyle: { backgroundColor: "blue", height: "100%" },
           pressOpacity: 1,
         }}
@@ -300,6 +326,30 @@ const listStyles = StyleSheet.create({
   listText: {
     color: "black",
     fontSize: 20,
-    flex: 1,
+    flex: 0.8,
+  },
+  checkIcon: {
+    flex: 0.1,
+    marginHorizontal: height / 80,
+  },
+  deleteIcon: {
+    flex: 0.1,
+  },
+});
+
+const completeTabStyle = StyleSheet.create({
+  wrapper: {
+    // backgroundColor: "red",
+  },
+  header: {
+    display: "flex",
+    marginTop: height / 16,
+    padding: height / 80,
+  },
+  headingText: {
+    display: "flex",
+    alignSelf: "flex-start",
+    fontSize: height / 32,
+    fontWeight: "700",
   },
 });
