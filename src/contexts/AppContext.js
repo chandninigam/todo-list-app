@@ -12,7 +12,7 @@ export function ContextProvider({ children }) {
     (async function getTodos() {
       const todosString = await AsyncStorage.getItem("");
       const todos = JSON.parse(todosString) || [];
-      console.log(JSON.stringify(todosString));
+      // console.log(JSON.stringify(todosString));
       setTodos(todos);
     })();
   }, []);
@@ -38,7 +38,7 @@ export function useTodos() {
     setTodos((prev) => {
       const updatedTodos = [...prev, input];
       AsyncStorage.setItem("appdata", JSON.stringify(updatedTodos));
-      console.log("updated", updatedTodos);
+      // console.log("updated", updatedTodos);
       return updatedTodos;
     });
   }

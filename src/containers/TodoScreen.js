@@ -20,7 +20,7 @@ export function TodoScreen() {
 
   const { addTodo, todos } = useTodos();
 
-  console.log(todos);
+  // console.log(todos);
   return (
     <View style={styles.container}>
       {/* HEADER */}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: height / 80,
+    paddingHorizontal: height / 100,
     paddingVertical: height / 88,
     borderRadius: height / 24,
     shadowColor: "#000",
