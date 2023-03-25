@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Dimensions, StatusBar, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { AntDesign as Icon } from "@expo/vector-icons";
+import { AntDesign as Icon, Foundation as Icon1 } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { TodoScreen } from "./src/containers/TodoScreen";
 import { CompletedTodoScreen } from "./src/containers/CompletedTodoScreen";
@@ -69,6 +69,13 @@ function AppNavigator() {
                 />
               </TouchableOpacity>
             ),
+            tabBarIcon: ({ size, focused }) => (
+              <Icon1
+                name="page-edit"
+                color={focused ? "#548af0" : "black"}
+                size={size}
+              />
+            ),
           }}
         />
         <BottomTab.Screen
@@ -82,6 +89,13 @@ function AppNavigator() {
               fontWeight: "700",
               fontFamily: "SourceSansBold",
             },
+            tabBarIcon: ({ size, focused }) => (
+              <Icon
+                name="checksquare"
+                color={focused ? "#548af0" : "black"}
+                size={size}
+              />
+            ),
           }}
         />
       </BottomTab.Navigator>
