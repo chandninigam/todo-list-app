@@ -35,11 +35,8 @@ function AppNavigator() {
           tabBarLabelPosition: "beside-icon",
           tabBarLabelStyle: {
             fontWeight: "700",
-            fontSize: 24,
+            fontSize: 20,
             fontFamily: "SourceSansBold",
-          },
-          headerStyle: {
-            backgroundColor: "#548af0",
           },
           tabBarActiveTintColor: "#548af0",
           tabBarInactiveTintColor: "black",

@@ -22,7 +22,7 @@ export default function TodoCard({ item }) {
           setTodoCompleted(item);
         }}
       >
-        <Icon name="checkcircleo" size={20} color="green" />
+        <Icon name="checkcircleo" size={21} color="green" />
       </TouchableOpacity>
       <TouchableOpacity
         style={listStyles.deleteIcon}
