@@ -1,7 +1,12 @@
-import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Text,
+} from "react-native";
 import { AntDesign as Icon } from "@expo/vector-icons";
 import { useTodos } from "../contexts/AppContext";
-import "./Text";
 
 const { height } = Dimensions.get("window");
 
@@ -10,7 +15,7 @@ export default function TodoCard({ item }) {
 
   return (
     <View style={listStyles.container}>
-      {/* <Text.Regular style={listStyles.listText}>{item}</Text.Regular> */}
+      <Text.Regular style={listStyles.listText}>{item}</Text.Regular>
       <TouchableOpacity
         style={listStyles.checkIcon}
         onPress={() => {

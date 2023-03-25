@@ -10,44 +10,21 @@ import {
   TextInput,
 } from "react-native";
 import { AntDesign as Icon } from "@expo/vector-icons";
-import { useFonts } from "expo-font";
-import { Context, useTodos } from "../contexts/AppContext";
+import { useTodos } from "../contexts/AppContext";
 import TodoCard from "../components/TodoCard";
-import MyFont from "../../assets/fonts/source-sans-regular.ttf";
 
 const { height } = Dimensions.get("window");
 
 export function TodoScreen() {
-  const { todos, input, setInput } = useContext(Context);
-  // const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
 
-  const { addTodo } = useTodos();
+  const { addTodo, todos } = useTodos();
 
-  const [loaded] = useFonts({
-    sans: MyFont,
-  });
-
-  if (!loaded) {
-    return null;
-  }
   console.log(todos);
   return (
     <View style={styles.container}>
       {/* HEADER */}
       <View style={styles.topWrapper}>
-        {/* <View style={styles.headerWrapper}> */}
-        {/* <Text style={styles.heading}>TODO APP</Text>
-          <TouchableOpacity
-            disabled={todos.length < 1}
-            onPress={deleteAllTodos}
-          >
-            <Icon
-              name="delete"
-              size={24}
-              color={todos.length < 1 ? "#8a8a8a" : "red"}
-            />
-          </TouchableOpacity>
-        </View> */}
         {/* FLATLIST */}
         <FlatList
           style={styles.flatList}
@@ -70,18 +47,15 @@ export function TodoScreen() {
           }}
           // called only when multiline is false
           onSubmitEditing={() => {
-            addTodo();
-            // .then(() => {
-            //   setInput("");
-            // });
+            addTodo(input);
+            setInput("");
           }}
         />
         <TouchableOpacity
           style={styles.addTodoBtn}
           onPress={() => {
-            addTodo().then((res) => {
-              setInput("");
-            });
+            addTodo(input);
+            setInput("");
           }}
         >
           <Icon name="plus" size={32} style={styles.addIcon} color="white" />

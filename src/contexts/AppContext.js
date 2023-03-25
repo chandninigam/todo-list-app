@@ -1,18 +1,19 @@
 import { useState, createContext, useEffect, useContext } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Context = createContext();
 
 export function ContextProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
-  const [input, setInput] = useState("");
 
   useEffect(() => {
     (async function getTodos() {
-      const data = await AsyncStorage.getItem("appdata");
-      setTodos(JSON.parse(data));
+      const todosString = await AsyncStorage.getItem("");
+      const todos = JSON.parse(todosString) || [];
+      console.log(JSON.stringify(todosString));
+      setTodos(todos);
     })();
   }, []);
 
@@ -23,8 +24,6 @@ export function ContextProvider({ children }) {
         setTodos,
         completeTodos,
         setCompleteTodos,
-        input,
-        setInput,
       }}
     >
       {children}
@@ -33,62 +32,15 @@ export function ContextProvider({ children }) {
 }
 
 export function useTodos() {
-  const { setTodos, todos, setCompleteTodos, input, setInput } =
-    useContext(Context);
-  function deleteAllTodos() {
-    Alert.alert("Delete All", "Do you really want to delete all?", [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        onPress: async () => {
-          setTodos([]);
-          await AsyncStorage.removeItem("appdata");
-        },
-        style: "destructive",
-      },
-    ]);
-  }
+  const { setTodos, todos, setCompleteTodos } = useContext(Context);
 
-  function deleteTodo(item) {
-    const filterTodo = todos.filter((each) => each !== item);
-    Alert.alert("Delete", `Do you really want to delete ${`"${item}"`} ?`, [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        onPress: () => {
-          setTodos(filterTodo);
-        },
-        style: "destructive",
-      },
-    ]);
-  }
-
-  //   function addTodo() {
-  //     return new Promise((resolve) => {
-  //       setTodos(async (prev) => {
-  //         const updatedTodos = [...prev, input];
-  //         await AsyncStorage.setItem("appdata", JSON.stringify(updatedTodos));
-  //         return updatedTodos;
-  //       });
-  //       resolve();
-  //     });
-  //   }
-
-  function addTodo() {
-    setTodos(async (prev) => {
+  function addTodo(input) {
+    setTodos((prev) => {
       const updatedTodos = [...prev, input];
-      await AsyncStorage.setItem("appdata", JSON.stringify(updatedTodos));
+      AsyncStorage.setItem("appdata", JSON.stringify(updatedTodos));
+      console.log("updated", updatedTodos);
       return updatedTodos;
     });
-    // console.log("new todos", todos);
-    // await AsyncStorage.setItem("appdata", JSON.stringify(todos));
-    setInput("");
   }
 
   function setTodoCompleted(item) {
@@ -107,20 +59,47 @@ export function useTodos() {
     ]);
   }
 
-  async function getTodos() {
-    try {
-      const data = await AsyncStorage.getItem("appdata");
-      setTodos(data);
-    } catch (err) {
-      console.log(err);
-    }
+  function deleteTodo(item) {
+    const filterTodo = todos.filter((each) => each !== item);
+    Alert.alert("Delete", `Do you really want to delete ${`"${item}"`} ?`, [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          setTodos(filterTodo);
+          AsyncStorage.setItem("appdata", JSON.stringify(filterTodo));
+        },
+        style: "destructive",
+      },
+    ]);
+  }
+
+  function deleteAllTodos() {
+    Alert.alert("Delete All", "Do you really want to delete all?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: async () => {
+          setTodos([]);
+          await AsyncStorage.removeItem("appdata");
+        },
+        style: "destructive",
+      },
+    ]);
   }
 
   return {
+    todos,
+    setTodos,
+    setTodoCompleted,
+    addTodo,
     deleteAllTodos,
     deleteTodo,
-    addTodo,
-    setTodoCompleted,
-    getTodos,
   };
 }

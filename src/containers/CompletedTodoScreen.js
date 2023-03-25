@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { Context } from "../contexts/AppContext";
 
 const { height } = Dimensions.get("window");
 
@@ -15,7 +17,6 @@ export function CompletedTodoScreen() {
 const completeTabStyle = StyleSheet.create({
   header: {
     display: "flex",
-    marginTop: height / 16,
     padding: height / 80,
   },
   headingText: {
