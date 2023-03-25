@@ -49,7 +49,7 @@ function AppNavigator() {
           options={{
             title: "Todos",
             headerTitleStyle: {
-              fontSize: height / 32,
+              fontSize: height / 36,
               fontWeight: "700",
               fontFamily: "SourceSansBold",
             },
@@ -82,7 +82,7 @@ function AppNavigator() {
             title: "Completed",
             headerTitle: "Completed Todos",
             headerTitleStyle: {
-              fontSize: height / 32,
+              fontSize: height / 36,
               fontWeight: "700",
               fontFamily: "SourceSansBold",
             },
