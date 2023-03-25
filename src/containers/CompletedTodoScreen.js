@@ -1,16 +1,8 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  FlatList,
-  useContext,
-} from "react-native";
-import { Context } from "../context/main";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 
 const { height } = Dimensions.get("window");
 
-export function Completed() {
+export function CompletedTodoScreen() {
   return (
     <View style={completeTabStyle.wrapper}>
       <View style={completeTabStyle.header}>
