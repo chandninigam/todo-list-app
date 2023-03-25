@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.19,
     shadowRadius: 3.84,
-    elevation: 2,
+    elevation: 1,
     backgroundColor: "white",
   },
   addTodoBtn: {
@@ -109,13 +109,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: height / 100,
     paddingVertical: height / 88,
     borderRadius: height / 24,
-    shadowColor: "#000",
+    shadowColor: "#548af",
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 2,
+    elevation: 1,
   },
 });
