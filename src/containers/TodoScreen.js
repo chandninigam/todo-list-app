@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+// Import Libraries
+import { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,9 +8,11 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
-import { AntDesign as Icon } from "@expo/vector-icons";
-import { useTodos } from "../contexts/AppContext";
+import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
+// Import Components
 import TodoCard from "../components/TodoCard";
+// Import Custom Hook
+import { useTodos } from "../contexts/AppContext";
 
 const { height } = Dimensions.get("window");
 
@@ -18,7 +21,6 @@ export function TodoScreen() {
 
   const { addTodo, todos } = useTodos();
 
-  // console.log("Todos", todos);
   return (
     <View style={styles.container}>
       {/* HEADER */}
@@ -56,7 +58,12 @@ export function TodoScreen() {
             setInput("");
           }}
         >
-          <Icon name="plus" size={32} style={styles.addIcon} color="white" />
+          <AntDesignIcon
+            name="plus"
+            size={32}
+            style={styles.addIcon}
+            color="white"
+          />
         </TouchableOpacity>
       </View>
     </View>

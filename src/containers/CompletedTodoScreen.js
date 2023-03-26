@@ -1,6 +1,5 @@
-import { useContext } from "react";
+// Import Libraries
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { Context } from "../contexts/AppContext";
 
 const { height } = Dimensions.get("window");
 

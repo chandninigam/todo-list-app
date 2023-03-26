@@ -1,3 +1,4 @@
+// Import Libraries
 import {
   View,
   TouchableOpacity,
@@ -5,7 +6,8 @@ import {
   Dimensions,
   Text,
 } from "react-native";
-import { AntDesign as Icon } from "@expo/vector-icons";
+import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
+// Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 
 const { height } = Dimensions.get("window");
@@ -21,7 +23,7 @@ export default function TodoCard({ item }) {
           setTodoCompleted(item);
         }}
       >
-        <Icon name="checkcircleo" size={21} color="green" />
+        <AntDesignIcon name="checkcircleo" size={21} color="green" />
       </TouchableOpacity>
       <TouchableOpacity
         style={listStyles.deleteIcon}
@@ -29,7 +31,7 @@ export default function TodoCard({ item }) {
           deleteTodo(item);
         }}
       >
-        <Icon name="delete" size={20} color="red" />
+        <AntDesignIcon name="delete" size={20} color="red" />
       </TouchableOpacity>
     </View>
   );
