@@ -12,7 +12,6 @@ const { height } = Dimensions.get("window");
 
 export default function TodoCard({ item }) {
   const { setTodoCompleted, deleteTodo } = useTodos();
-
   return (
     <View style={listStyles.container}>
       <Text.Regular style={listStyles.listText}>{item}</Text.Regular>

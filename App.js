@@ -2,13 +2,17 @@ import React, { useContext, useEffect } from "react";
 import { Dimensions, StatusBar, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { AntDesign as Icon, Foundation as Icon1 } from "@expo/vector-icons";
+import {
+  AntDesign as AntDesignIcon,
+  Foundation as FoundationIcon,
+} from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { TodoScreen } from "./src/containers/TodoScreen";
 import { CompletedTodoScreen } from "./src/containers/CompletedTodoScreen";
 import { ContextProvider, Context, useTodos } from "./src/contexts/AppContext";
 import "./polyfill";
 import SourceSansRegular from "./assets/fonts/source-sans-regular.ttf";
+import SourceSansMedium from "./assets/fonts/source-sans-medium.ttf";
 import SourceSansBold from "./assets/fonts/source-sans-bold.ttf";
 
 const BottomTab = createBottomTabNavigator();
@@ -22,6 +26,7 @@ function AppNavigator() {
   const { deleteAllTodos } = useTodos();
   const [loaded] = useFonts({
     SourceSansRegular: SourceSansRegular,
+    SourceSansMedium: SourceSansMedium,
     SourceSansBold: SourceSansBold,
   });
 
@@ -34,12 +39,11 @@ function AppNavigator() {
         screenOptions={{
           tabBarLabelPosition: "beside-icon",
           tabBarLabelStyle: {
-            fontWeight: "700",
             fontSize: 20,
             fontFamily: "SourceSansBold",
           },
           tabBarActiveTintColor: "#548af0",
-          tabBarInactiveTintColor: "black",
+          tabBarInactiveTintColor: "#aaacad",
           pressOpacity: 1,
         }}
       >
@@ -49,9 +53,8 @@ function AppNavigator() {
           options={{
             title: "Todos",
             headerTitleStyle: {
-              fontSize: height / 36,
-              fontWeight: "700",
-              fontFamily: "SourceSansBold",
+              fontSize: 24,
+              fontFamily: "SourceSansMedium",
             },
             headerRight: () => (
               <TouchableOpacity
@@ -59,7 +62,7 @@ function AppNavigator() {
                 onPress={deleteAllTodos}
                 style={{ marginRight: height / 40 }}
               >
-                <Icon
+                <AntDesignIcon
                   name="delete"
                   size={24}
                   color={todos.length < 1 ? "#c1cde0" : "red"}
@@ -67,9 +70,9 @@ function AppNavigator() {
               </TouchableOpacity>
             ),
             tabBarIcon: ({ size, focused }) => (
-              <Icon1
+              <FoundationIcon
                 name="page-edit"
-                color={focused ? "#548af0" : "black"}
+                color={focused ? "#548af0" : "#aaacad"}
                 size={size}
               />
             ),
@@ -87,9 +90,9 @@ function AppNavigator() {
               fontFamily: "SourceSansBold",
             },
             tabBarIcon: ({ size, focused }) => (
-              <Icon
+              <AntDesignIcon
                 name="checksquare"
-                color={focused ? "#548af0" : "black"}
+                color={focused ? "#548af0" : "#aaacad"}
                 size={size}
               />
             ),

@@ -10,7 +10,7 @@ export function ContextProvider({ children }) {
 
   useEffect(() => {
     (async function getTodos() {
-      const todosString = await AsyncStorage.getItem("");
+      const todosString = await AsyncStorage.getItem("appdata");
       const todos = JSON.parse(todosString) || [];
       // console.log(JSON.stringify(todosString));
       setTodos(todos);

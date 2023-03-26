@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import {
   View,
-  Alert,
   StyleSheet,
   Dimensions,
-  Text,
   TouchableOpacity,
   FlatList,
   TextInput,
@@ -20,7 +18,7 @@ export function TodoScreen() {
 
   const { addTodo, todos } = useTodos();
 
-  // console.log(todos);
+  // console.log("Todos", todos);
   return (
     <View style={styles.container}>
       {/* HEADER */}
