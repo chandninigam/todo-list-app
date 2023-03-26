@@ -2,53 +2,58 @@
 import { useState } from "react";
 import {
   View,
+  TextInput,
+  TouchableOpacity,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
 } from "react-native";
 import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
-// Import Components
-import TodoCard from "../components/TodoCard";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
-import { AddTodoInputBtn } from "../components/AddTodoInputBtn";
 
 const { height } = Dimensions.get("window");
 
-export function TodoScreen() {
-  const { todos } = useTodos();
+export function AddTodoInputBtn() {
+  const [input, setInput] = useState("");
+  const { addTodo } = useTodos();
 
   return (
-    <View style={styles.container}>
-      {/* HEADER */}
-      <View style={styles.topWrapper}>
-        {/* FLATLIST */}
-        <FlatList
-          style={styles.flatList}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
-          data={todos}
-          renderItem={({ item }) => <TodoCard item={item} />}
+    <View style={styles.wrapper}>
+      <TextInput
+        placeholder="Add Todo"
+        style={styles.inputTodo}
+        defaultValue={input}
+        autoCorrect={false}
+        returnKeyType="done"
+        onChangeText={(value) => {
+          setInput(value);
+        }}
+        // called only when multiline is false
+        onSubmitEditing={() => {
+          addTodo(input);
+          setInput("");
+        }}
+      />
+      <TouchableOpacity
+        style={styles.addTodoBtn}
+        onPress={() => {
+          addTodo(input);
+          setInput("");
+        }}
+      >
+        <AntDesignIcon
+          name="plus"
+          size={32}
+          style={styles.addIcon}
+          color="white"
         />
-      </View>
-      {/* FOOTER */}
-      <AddTodoInputBtn />
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  topWrapper: {
-    display: "flex",
-    flex: 1,
-  },
-  bottomWrapper: {
+  wrapper: {
     paddingVertical: height / 48,
     display: "flex",
     flexDirection: "row",

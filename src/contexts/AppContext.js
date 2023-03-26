@@ -12,7 +12,6 @@ export function ContextProvider({ children }) {
     (async function getTodos() {
       const todosString = await AsyncStorage.getItem("TodoAppData");
       const todos = JSON.parse(todosString) || [];
-      // console.log(JSON.stringify(todosString));
       setTodos(todos);
     })();
   }, []);
@@ -38,7 +37,6 @@ export function useTodos() {
     setTodos((prev) => {
       const updatedTodos = [...prev, input];
       AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
-      // console.log("updated", updatedTodos);
       return updatedTodos;
     });
   }
