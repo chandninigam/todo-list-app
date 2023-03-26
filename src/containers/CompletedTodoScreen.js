@@ -1,16 +1,10 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  FlatList,
-  useContext,
-} from "react-native";
-import { Context } from "../context/main";
+import { useContext } from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { Context } from "../contexts/AppContext";
 
 const { height } = Dimensions.get("window");
 
-export function Completed() {
+export function CompletedTodoScreen() {
   return (
     <View style={completeTabStyle.wrapper}>
       <View style={completeTabStyle.header}>
@@ -23,7 +17,6 @@ export function Completed() {
 const completeTabStyle = StyleSheet.create({
   header: {
     display: "flex",
-    marginTop: height / 16,
     padding: height / 80,
   },
   headingText: {
