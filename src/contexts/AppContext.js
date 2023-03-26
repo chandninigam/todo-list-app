@@ -10,9 +10,8 @@ export function ContextProvider({ children }) {
 
   useEffect(() => {
     (async function getTodos() {
-      const todosString = await AsyncStorage.getItem("appdata");
+      const todosString = await AsyncStorage.getItem("TodoAppData");
       const todos = JSON.parse(todosString) || [];
-      // console.log(JSON.stringify(todosString));
       setTodos(todos);
     })();
   }, []);
@@ -37,8 +36,7 @@ export function useTodos() {
   function addTodo(input) {
     setTodos((prev) => {
       const updatedTodos = [...prev, input];
-      AsyncStorage.setItem("appdata", JSON.stringify(updatedTodos));
-      // console.log("updated", updatedTodos);
+      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
       return updatedTodos;
     });
   }
@@ -70,7 +68,7 @@ export function useTodos() {
         text: "Delete",
         onPress: () => {
           setTodos(filterTodo);
-          AsyncStorage.setItem("appdata", JSON.stringify(filterTodo));
+          AsyncStorage.setItem("TodoAppData", JSON.stringify(filterTodo));
         },
         style: "destructive",
       },
@@ -87,7 +85,7 @@ export function useTodos() {
         text: "Delete",
         onPress: async () => {
           setTodos([]);
-          await AsyncStorage.removeItem("appdata");
+          await AsyncStorage.removeItem("TodoAppData");
         },
         style: "destructive",
       },
