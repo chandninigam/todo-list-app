@@ -1,25 +1,15 @@
 // Import Libraries
-import { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
-} from "react-native";
-import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
+import { View, StyleSheet, FlatList } from "react-native";
 // Import Components
 import TodoCard from "../components/TodoCard";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 import { AddTodoInputBtn } from "../components/AddTodoInputBtn";
 
-const { height } = Dimensions.get("window");
-
 export function TodoScreen() {
   const { todos } = useTodos();
 
+  console.log(todos);
   return (
     <View style={styles.container}>
       {/* HEADER */}

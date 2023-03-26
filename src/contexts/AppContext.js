@@ -34,8 +34,15 @@ export function useTodos() {
   const { setTodos, todos, setCompleteTodos } = useContext(Context);
 
   function addTodo(input) {
+    const createdTodoObject = {
+      title: input,
+      description: "Long Description",
+      isCompleted: false,
+      data_created: new Date(),
+      date_completed: null,
+    };
     setTodos((prev) => {
-      const updatedTodos = [...prev, input];
+      const updatedTodos = [...prev, createdTodoObject];
       AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
       return updatedTodos;
     });

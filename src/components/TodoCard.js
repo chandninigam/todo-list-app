@@ -16,7 +16,7 @@ export default function TodoCard({ item }) {
   const { setTodoCompleted, deleteTodo } = useTodos();
   return (
     <View style={listStyles.container}>
-      <Text.Regular style={listStyles.listText}>{item}</Text.Regular>
+      <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
       <TouchableOpacity
         style={listStyles.checkIcon}
         onPress={() => {
