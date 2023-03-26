@@ -9,7 +9,6 @@ import { AddTodoInputBtn } from "../components/AddTodoInputBtn";
 export function TodoScreen() {
   const { todos } = useTodos();
 
-  console.log(todos);
   return (
     <View style={styles.container}>
       {/* HEADER */}

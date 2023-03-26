@@ -66,20 +66,24 @@ export function useTodos() {
 
   function deleteTodo(item) {
     const filterTodo = todos.filter((each) => each !== item);
-    Alert.alert("Delete", `Do you really want to delete ${`"${item}"`} ?`, [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        onPress: () => {
-          setTodos(filterTodo);
-          AsyncStorage.setItem("TodoAppData", JSON.stringify(filterTodo));
+    Alert.alert(
+      "Delete",
+      `Do you really want to delete ${`"${item.title}"`} ?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
         },
-        style: "destructive",
-      },
-    ]);
+        {
+          text: "Delete",
+          onPress: () => {
+            setTodos(filterTodo);
+            AsyncStorage.setItem("TodoAppData", JSON.stringify(filterTodo));
+          },
+          style: "destructive",
+        },
+      ]
+    );
   }
 
   function deleteAllTodos() {
