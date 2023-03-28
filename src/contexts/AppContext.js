@@ -75,7 +75,7 @@ export function useTodos() {
           style: "cancel",
         },
         {
-          text: "Delete",
+          text: "Remove",
           onPress: () => {
             setTodos(filterTodo);
             AsyncStorage.setItem("TodoAppData", JSON.stringify(filterTodo));
