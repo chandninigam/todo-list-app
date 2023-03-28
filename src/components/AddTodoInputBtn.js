@@ -20,7 +20,7 @@ export function AddTodoInputBtn() {
   return (
     <View style={styles.wrapper}>
       <TextInput
-        placeholder="Add Todo"
+        placeholder="Add Title"
         style={styles.inputTodo}
         defaultValue={input}
         autoCorrect={false}
@@ -54,7 +54,6 @@ export function AddTodoInputBtn() {
 
 const styles = StyleSheet.create({
   wrapper: {
-    // paddingVertical: height / 48,
     display: "flex",
     flexDirection: "row",
     alignContent: "center",

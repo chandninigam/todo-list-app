@@ -38,7 +38,7 @@ export function useTodos() {
       title: input,
       description: "Long Description",
       isCompleted: false,
-      data_created: new Date(),
+      todo_created: new Date(),
       date_completed: null,
     };
     setTodos((prev) => {
