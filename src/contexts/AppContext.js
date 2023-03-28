@@ -7,6 +7,7 @@ export const Context = createContext();
 export function ContextProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
+  const [showClearTodosBtn, setShowClearTodosBtn] = useState(true);
 
   useEffect(() => {
     (async function getTodos() {
@@ -21,6 +22,8 @@ export function ContextProvider({ children }) {
       value={{
         todos,
         setTodos,
+        showClearTodosBtn,
+        setShowClearTodosBtn,
         completeTodos,
         setCompleteTodos,
       }}
@@ -38,8 +41,8 @@ export function useTodos() {
       title: input,
       description: "Long Description",
       isCompleted: false,
-      data_created: new Date(),
-      date_completed: null,
+      todo_date_created: new Date(),
+      todo_date_completed: null,
     };
     setTodos((prev) => {
       const updatedTodos = [...prev, createdTodoObject];
@@ -68,14 +71,14 @@ export function useTodos() {
     const filterTodo = todos.filter((each) => each !== item);
     Alert.alert(
       "Delete",
-      `Do you really want to delete ${`"${item.title}"`} ?`,
+      `Do you really want to remove ${`"${item.title}"`} ?`,
       [
         {
           text: "Cancel",
           style: "cancel",
         },
         {
-          text: "Delete",
+          text: "Remove",
           onPress: () => {
             setTodos(filterTodo);
             AsyncStorage.setItem("TodoAppData", JSON.stringify(filterTodo));

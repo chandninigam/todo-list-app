@@ -9,7 +9,7 @@ import {
 } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 // Import Containers
-import { TodoScreen } from "./containers/TodoScreen";
+import { TodoNavigator } from "./containers/TodoScreen";
 import { CompletedTodoScreen } from "./containers/CompletedTodoScreen";
 // Import Fonts
 import SourceSansRegular from "../assets/fonts/source-sans-regular.ttf";
@@ -22,8 +22,9 @@ const { height } = Dimensions.get("window");
 const BottomTab = createBottomTabNavigator();
 
 export function EntryAppNavigator() {
-  const { todos } = useContext(Context);
-  const { deleteAllTodos } = useTodos();
+  const { showClearTodosBtn } = useContext(Context);
+  const { deleteAllTodos, todos } = useTodos();
+
   const [loaded] = useFonts({
     SourceSansRegular: SourceSansRegular,
     SourceSansMedium: SourceSansMedium,
@@ -49,26 +50,27 @@ export function EntryAppNavigator() {
       >
         <BottomTab.Screen
           name="Todos"
-          component={TodoScreen}
+          component={TodoNavigator}
           options={{
             title: "Todos",
             headerTitleStyle: {
               fontSize: 24,
               fontFamily: "SourceSansMedium",
             },
-            headerRight: () => (
-              <TouchableOpacity
-                disabled={todos.length < 1}
-                onPress={deleteAllTodos}
-                style={{ marginRight: height / 40 }}
-              >
-                <AntDesignIcon
-                  name="delete"
-                  size={24}
-                  color={todos.length < 1 ? "#c1cde0" : "red"}
-                />
-              </TouchableOpacity>
-            ),
+            headerRight: () =>
+              showClearTodosBtn ? (
+                <TouchableOpacity
+                  disabled={todos.length < 1}
+                  onPress={deleteAllTodos}
+                  style={{ marginRight: height / 40 }}
+                >
+                  <AntDesignIcon
+                    name="delete"
+                    size={24}
+                    color={todos.length < 1 ? "#c1cde0" : "red"}
+                  />
+                </TouchableOpacity>
+              ) : null,
             tabBarIcon: ({ size, focused }) => (
               <FoundationIcon
                 name="page-edit"

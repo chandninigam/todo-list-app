@@ -1,15 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
 
-export default function EmptyList() {
+export default function EmptyList({ path, title }) {
   return (
     <View style={styles.emptyWrapper}>
-      <LottieView
-        autoPlay
-        style={styles.emptyLottieAnimation}
-        source={require("../../assets/animations/empty-list.json")}
-      />
-      <Text.Bold style={styles.emptyText}>Empty List</Text.Bold>
+      <LottieView autoPlay style={styles.emptyLottieAnimation} source={path} />
+      <Text.Bold style={styles.emptyText}>{title}</Text.Bold>
     </View>
   );
 }
@@ -29,5 +25,6 @@ const styles = StyleSheet.create({
   emptyText: {
     flex: 0.4,
     fontSize: 32,
+    color: "#a8a7a5",
   },
 });
