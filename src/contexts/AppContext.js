@@ -68,7 +68,7 @@ export function useTodos() {
     const filterTodo = todos.filter((each) => each !== item);
     Alert.alert(
       "Delete",
-      `Do you really want to delete ${`"${item.title}"`} ?`,
+      `Do you really want to remove ${`"${item.title}"`} ?`,
       [
         {
           text: "Cancel",

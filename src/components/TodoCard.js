@@ -14,21 +14,13 @@ import { useTodos } from "../contexts/AppContext";
 const { height } = Dimensions.get("window");
 
 export default function TodoCard({ item }) {
-  const { setTodoCompleted, deleteTodo } = useTodos();
+  const { deleteTodo } = useTodos();
 
   return (
     <View style={listStyles.listWrapper}>
       <View style={listStyles.topContainer}>
         <CheckBox containerStyle={listStyles.checkbox} />
         <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
-        {/* <TouchableOpacity
-          style={listStyles.checkIcon}
-          onPress={() => {
-            setTodoCompleted(item);
-          }}
-        >
-          <AntDesignIcon name="checkcircleo" size={21} color="green" />
-        </TouchableOpacity> */}
         <TouchableOpacity
           style={listStyles.deleteIcon}
           onPress={() => {
