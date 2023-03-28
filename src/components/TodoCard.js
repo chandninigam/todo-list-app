@@ -6,7 +6,8 @@ import {
   Dimensions,
   Text,
 } from "react-native";
-import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
+import { CheckBox } from "react-native-elements";
+import { Entypo as EntypoIcon } from "@expo/vector-icons";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 
@@ -18,22 +19,23 @@ export default function TodoCard({ item }) {
   return (
     <View style={listStyles.listWrapper}>
       <View style={listStyles.topContainer}>
+        <CheckBox containerStyle={listStyles.checkbox} />
         <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={listStyles.checkIcon}
           onPress={() => {
             setTodoCompleted(item);
           }}
         >
           <AntDesignIcon name="checkcircleo" size={21} color="green" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={listStyles.deleteIcon}
           onPress={() => {
             deleteTodo(item);
           }}
         >
-          <AntDesignIcon name="delete" size={20} color="red" />
+          <EntypoIcon name="cross" size={28} color="red" />
         </TouchableOpacity>
       </View>
       <Text.Regular style={listStyles.textCreatedOn}>
@@ -49,8 +51,6 @@ export default function TodoCard({ item }) {
 const listStyles = StyleSheet.create({
   listWrapper: {
     display: "flex",
-    // flexDirection: "row",
-    padding: height / 64,
     backgroundColor: "white",
     marginBottom: height / 40,
     shadowColor: "#000",
@@ -67,21 +67,29 @@ const listStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+  checkbox: {
+    display: "flex",
+    alignSelf: "center",
+    paddingLeft: 4,
+    paddingRight: 0,
+    paddingVertical: 6,
+  },
   listText: {
     color: "black",
     fontSize: 20,
-    flex: 0.8,
-  },
-  checkIcon: {
-    flex: 0.1,
-    marginHorizontal: height / 80,
+    flex: 0.9,
+    display: "flex",
+    alignSelf: "center",
   },
   deleteIcon: {
+    display: "flex",
+    alignSelf: "center",
     flex: 0.1,
   },
   textCreatedOn: {
     fontSize: 16,
-    marginTop: 8,
+    marginBottom: 8,
+    paddingHorizontal: 16,
     color: "#abafb3",
   },
 });
