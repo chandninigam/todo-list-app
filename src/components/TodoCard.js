@@ -10,16 +10,34 @@ import { CheckBox } from "react-native-elements";
 import { Entypo as EntypoIcon } from "@expo/vector-icons";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
+import { useNavigation } from "@react-navigation/native";
 
 const { height } = Dimensions.get("window");
 
 export default function TodoCard({ item }) {
-  const { deleteTodo } = useTodos();
+  const { deleteTodo, todos, setTodos } = useTodos();
+  const { navigate } = useNavigation();
 
   return (
-    <View style={listStyles.listWrapper}>
+    <TouchableOpacity
+      style={listStyles.listWrapper}
+      onPress={() => {
+        navigate("TodoEditScreen", { todo: item });
+      }}
+    >
       <View style={listStyles.topContainer}>
-        <CheckBox containerStyle={listStyles.checkbox} />
+        <CheckBox
+          containerStyle={listStyles.checkbox}
+          onPress={() => {
+            const index = todos.findIndex((obj) => obj === item);
+            let newArrayTodo = [...todos];
+            newArrayTodo[index] = {
+              ...newArrayTodo[index],
+              isCompleted: true,
+            };
+            setTodos(newArrayTodo);
+          }}
+        />
         <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
         <TouchableOpacity
           style={listStyles.deleteIcon}
@@ -32,11 +50,11 @@ export default function TodoCard({ item }) {
       </View>
       <Text.Regular style={listStyles.textCreatedOn}>
         Created on :
-        {` ${new Date(item.todo_created).getDate()}-${new Date(
-          item.todo_created
+        {` ${new Date(item.todo_date_created).getDate()}-${new Date(
+          item.todo_date_created
         ).toLocaleString("default", { month: "long" })}`}
       </Text.Regular>
-    </View>
+    </TouchableOpacity>
   );
 }
 

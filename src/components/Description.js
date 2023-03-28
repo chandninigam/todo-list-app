@@ -1,4 +1,5 @@
 // Import Libraries
+import { useContext, useEffect } from "react";
 import {
   View,
   TouchableOpacity,
@@ -6,8 +7,21 @@ import {
   Text,
   TextInput,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Context } from "../contexts/AppContext";
 
-function Description() {
+export function TodoDescription(props) {
+  const { setShowClearTodosBtn } = useContext(Context);
+  const navigation = useNavigation();
+  //   console.log(JSON.stringify(props.route.params.todo));
+
+  useEffect(() => {
+    const unSubscribe = navigation.addListener("focus", () => {
+      setShowClearTodosBtn(false);
+    });
+    return unSubscribe;
+  }, [navigation]);
+
   return (
     <View style={desStyles.desContainer}>
       <Text.Bold style={desStyles.desTitle}>Title</Text.Bold>
@@ -32,7 +46,7 @@ const desStyles = StyleSheet.create({
     display: "flex",
     backgroundColor: "white",
     padding: 24,
-    marginBottom: height / 40,
+    marginBottom: 32,
     shadowColor: "#000",
     borderRadius: 12,
     shadowOffset: {

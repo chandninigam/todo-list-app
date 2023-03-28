@@ -7,6 +7,7 @@ export const Context = createContext();
 export function ContextProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
+  const [showClearTodosBtn, setShowClearTodosBtn] = useState(true);
 
   useEffect(() => {
     (async function getTodos() {
@@ -21,6 +22,8 @@ export function ContextProvider({ children }) {
       value={{
         todos,
         setTodos,
+        showClearTodosBtn,
+        setShowClearTodosBtn,
         completeTodos,
         setCompleteTodos,
       }}
@@ -38,8 +41,8 @@ export function useTodos() {
       title: input,
       description: "Long Description",
       isCompleted: false,
-      todo_created: new Date(),
-      date_completed: null,
+      todo_date_created: new Date(),
+      todo_date_completed: null,
     };
     setTodos((prev) => {
       const updatedTodos = [...prev, createdTodoObject];
