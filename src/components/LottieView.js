@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from "react-native";
-import LottieView from "lottie-react-native";
+import Lottie from "lottie-react-native";
 
-export default function EmptyList({ path, title }) {
+export default function LottieView({ path, title }) {
   return (
     <View style={styles.emptyWrapper}>
-      <LottieView autoPlay style={styles.emptyLottieAnimation} source={path} />
+      <Lottie autoPlay style={styles.emptyLottieAnimation} source={path} />
       <Text.Bold style={styles.emptyText}>{title}</Text.Bold>
     </View>
   );

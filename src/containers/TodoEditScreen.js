@@ -10,9 +10,10 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Context } from "../contexts/AppContext";
 
-export function TodoDescription(props) {
+export function TodoEditScreen(props) {
   const { setShowClearTodosBtn } = useContext(Context);
   const navigation = useNavigation();
+  const todo = props.route.params?.todo;
 
   useEffect(() => {
     const unSubscribe = navigation.addListener("focus", () => {
@@ -21,9 +22,11 @@ export function TodoDescription(props) {
     return unSubscribe;
   }, [navigation]);
 
+  // console.log(props.route.params.todo);
+
   return (
     <View style={desStyles.desContainer}>
-      <Text.Bold style={desStyles.desTitle}>Title</Text.Bold>
+      <TextInput defaultValue={todo?.title || ""} />
       <View style={desStyles.desWrapper}>
         <TextInput
           editable
@@ -31,10 +34,22 @@ export function TodoDescription(props) {
           numberOfLines={4}
           placeholder="Add Description"
           style={desStyles.desText}
+          defaultValue={todo?.description || ""}
         />
       </View>
-      <TouchableOpacity style={desStyles.desAddBtnTouchableOp}>
-        <Text.Bold style={desStyles.desAddBtnText}>Add</Text.Bold>
+      <TouchableOpacity
+        style={desStyles.desAddBtnTouchableOp}
+        onPress={() => {
+          if (todo) {
+            // upadte existing todo
+          } else {
+            // save new todo
+          }
+        }}
+      >
+        <Text.Bold style={desStyles.desAddBtnText}>
+          {todo ? "Update" : "Add"}
+        </Text.Bold>
       </TouchableOpacity>
     </View>
   );

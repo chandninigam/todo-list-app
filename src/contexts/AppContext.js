@@ -54,6 +54,7 @@ export function useTodos() {
     newArrayTodo[index] = {
       ...newArrayTodo[index],
       is_completed: true,
+      todo_date_completed: new Date(),
     };
     setTodos(() => {
       const updatedTodos = newArrayTodo;
