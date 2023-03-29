@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 const { height } = Dimensions.get("window");
 
 export default function TodoCard({ item }) {
-  const { deleteTodo, todos, setTodos } = useTodos();
+  const { deleteTodo, todos, setTodoCompleted } = useTodos();
   const { navigate } = useNavigation();
 
   return (
@@ -29,13 +29,7 @@ export default function TodoCard({ item }) {
         <CheckBox
           containerStyle={listStyles.checkbox}
           onPress={() => {
-            const index = todos.findIndex((obj) => obj === item);
-            let newArrayTodo = [...todos];
-            newArrayTodo[index] = {
-              ...newArrayTodo[index],
-              isCompleted: true,
-            };
-            setTodos(newArrayTodo);
+            setTodoCompleted(item);
           }}
         />
         <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>

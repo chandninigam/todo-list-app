@@ -45,6 +45,8 @@ export function TodoListScreen() {
     return unSubscribe;
   }, [navigation]);
 
+  console.log(todos);
+
   return (
     <View style={styles.container}>
       {/* HEADER */}
