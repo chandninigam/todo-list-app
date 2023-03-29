@@ -14,7 +14,7 @@ export function CompletedTodoScreen() {
 
   useEffect(() => {
     const filteredIsComplted = todos.filter((todo) => {
-      return todo.isCompleted === true;
+      return todo.is_completed === true;
     });
     filteredIsComplted.length < 1
       ? setIsAnyCompletedTodo(true)
@@ -31,9 +31,12 @@ export function CompletedTodoScreen() {
       ) : (
         <View>
           {todos.map((todo) => {
-            if (todo.isCompleted) {
+            if (todo.is_completed) {
               return (
-                <View style={completeTabStyle.listWrapper}>
+                <View
+                  key={todo.todo_date_completed}
+                  style={completeTabStyle.listWrapper}
+                >
                   <View style={completeTabStyle.listTitleIcon}>
                     <Text.Regular style={completeTabStyle.headingText}>
                       {todo.title}

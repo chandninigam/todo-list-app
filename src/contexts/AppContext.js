@@ -40,7 +40,7 @@ export function useTodos() {
     const createdTodoObject = {
       title: input,
       description: "Long Description",
-      isCompleted: false,
+      is_completed: false,
       todo_date_created: new Date(),
       todo_date_completed: null,
     };
@@ -52,19 +52,17 @@ export function useTodos() {
   }
 
   function setTodoCompleted(item) {
-    Alert.alert("Completed", `Congratulations for completeing "${item}" task`, [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Completed",
-        onPress: () => {
-          setCompleteTodos((prev) => [...prev, item]);
-        },
-        style: "default",
-      },
-    ]);
+    const index = todos.findIndex((obj) => obj === item);
+    let newArrayTodo = [...todos];
+    newArrayTodo[index] = {
+      ...newArrayTodo[index],
+      is_completed: true,
+    };
+    setTodos(() => {
+      const updatedTodos = newArrayTodo;
+      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
   }
 
   function deleteTodo(item) {
