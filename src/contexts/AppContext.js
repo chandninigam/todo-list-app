@@ -6,7 +6,6 @@ export const Context = createContext();
 
 export function ContextProvider({ children }) {
   const [todos, setTodos] = useState([]);
-  const [completeTodos, setCompleteTodos] = useState([]);
   const [showClearTodosBtn, setShowClearTodosBtn] = useState(true);
 
   useEffect(() => {
@@ -24,8 +23,6 @@ export function ContextProvider({ children }) {
         setTodos,
         showClearTodosBtn,
         setShowClearTodosBtn,
-        completeTodos,
-        setCompleteTodos,
       }}
     >
       {children}
@@ -34,7 +31,7 @@ export function ContextProvider({ children }) {
 }
 
 export function useTodos() {
-  const { setTodos, todos, setCompleteTodos } = useContext(Context);
+  const { setTodos, todos } = useContext(Context);
 
   function addTodo(input) {
     const createdTodoObject = {

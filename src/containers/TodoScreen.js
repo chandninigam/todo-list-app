@@ -45,14 +45,19 @@ export function TodoListScreen() {
     return unSubscribe;
   }, [navigation]);
 
-  console.log(todos);
+  function getInCompletedTodosLength() {
+    const getInCompletedTodos = todos.filter(
+      (todo) => todo.is_completed === false
+    );
+    return getInCompletedTodos.length;
+  }
 
   return (
     <View style={styles.container}>
       {/* HEADER */}
       <View style={styles.topWrapper}>
         {/* Conditonal rendering according to length of todos */}
-        {todos.length < 1 ? (
+        {getInCompletedTodosLength() < 1 ? (
           <EmptyList
             path={require("../../assets/animations/emoji.json")}
             title="Empty List"

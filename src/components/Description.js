@@ -13,7 +13,6 @@ import { Context } from "../contexts/AppContext";
 export function TodoDescription(props) {
   const { setShowClearTodosBtn } = useContext(Context);
   const navigation = useNavigation();
-  //   console.log(JSON.stringify(props.route.params.todo));
 
   useEffect(() => {
     const unSubscribe = navigation.addListener("focus", () => {
