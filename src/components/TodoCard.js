@@ -18,45 +18,48 @@ export default function TodoCard({ item }) {
   const { deleteTodo, todos, setTodoCompleted } = useTodos();
   const { navigate } = useNavigation();
 
-  return (
-    <TouchableOpacity
-      style={listStyles.listWrapper}
-      onPress={() => {
-        navigate("TodoEditScreen", { todo: item });
-      }}
-    >
-      <View style={listStyles.topContainer}>
-        <CheckBox
-          containerStyle={listStyles.checkbox}
-          onPress={() => {
-            setTodoCompleted(item);
-          }}
-        />
-        <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
-        <TouchableOpacity
-          style={listStyles.deleteIcon}
-          onPress={() => {
-            deleteTodo(item);
-          }}
-        >
-          <EntypoIcon name="cross" size={28} color="red" />
-        </TouchableOpacity>
-      </View>
-      <Text.Regular style={listStyles.textCreatedOn}>
-        Created on :
-        {` ${new Date(item.todo_date_created).getDate()}-${new Date(
-          item.todo_date_created
-        ).toLocaleString("default", { month: "long" })}`}
-      </Text.Regular>
-    </TouchableOpacity>
-  );
+  if (!item.is_completed) {
+    return (
+      <TouchableOpacity
+        style={listStyles.listWrapper}
+        onPress={() => {
+          navigate("TodoEditScreen", { todo: item });
+        }}
+      >
+        <View style={listStyles.topContainer}>
+          <CheckBox
+            containerStyle={listStyles.checkbox}
+            onPress={() => {
+              setTodoCompleted(item);
+            }}
+          />
+          <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
+          <TouchableOpacity
+            style={listStyles.deleteIcon}
+            onPress={() => {
+              deleteTodo(item);
+            }}
+          >
+            <EntypoIcon name="cross" size={28} color="red" />
+          </TouchableOpacity>
+        </View>
+        <Text.Regular style={listStyles.textCreatedOn}>
+          Created on :
+          {` ${new Date(item.todo_date_created).getDate()}-${new Date(
+            item.todo_date_created
+          ).toLocaleString("default", { month: "long" })}`}
+        </Text.Regular>
+      </TouchableOpacity>
+    );
+  }
+  return null;
 }
 
 const listStyles = StyleSheet.create({
   listWrapper: {
     display: "flex",
     backgroundColor: "white",
-    marginBottom: height / 40,
+    marginBottom: 24,
     shadowColor: "#000",
     borderRadius: 12,
     shadowOffset: {
