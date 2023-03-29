@@ -1,5 +1,5 @@
 // Import Libraries
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -8,11 +8,16 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Context } from "../contexts/AppContext";
+import { Context, useTodos } from "../contexts/AppContext";
 
 export function TodoDescription(props) {
+  const todoObject = JSON.parse(JSON.stringify(props.route.params.todo));
+
   const { setShowClearTodosBtn } = useContext(Context);
+  const { setTodoDescription, todos } = useTodos();
+  const [desc, setDesc] = useState(todoObject.description);
   const navigation = useNavigation();
+  // console.log(todoObject.description);
 
   useEffect(() => {
     const unSubscribe = navigation.addListener("focus", () => {
@@ -20,20 +25,29 @@ export function TodoDescription(props) {
     });
     return unSubscribe;
   }, [navigation]);
-
+  // console.log(JSON.stringify(props.route.params.todo));
   return (
     <View style={desStyles.desContainer}>
-      <Text.Bold style={desStyles.desTitle}>Title</Text.Bold>
+      <Text.Bold style={desStyles.desTitle}>{todoObject.title}</Text.Bold>
       <View style={desStyles.desWrapper}>
         <TextInput
+          value={desc}
           editable
           multiline
           numberOfLines={4}
           placeholder="Add Description"
           style={desStyles.desText}
+          onChangeText={(value) => {
+            setDesc(value);
+          }}
         />
       </View>
-      <TouchableOpacity style={desStyles.desAddBtnTouchableOp}>
+      <TouchableOpacity
+        style={desStyles.desAddBtnTouchableOp}
+        onPress={() => {
+          setTodoDescription(todoObject, desc);
+        }}
+      >
         <Text.Bold style={desStyles.desAddBtnText}>Add</Text.Bold>
       </TouchableOpacity>
     </View>
@@ -43,9 +57,10 @@ export function TodoDescription(props) {
 const desStyles = StyleSheet.create({
   desContainer: {
     display: "flex",
+    flex: 1,
     backgroundColor: "white",
-    padding: 24,
-    marginBottom: 32,
+    padding: 12,
+    margin: 12,
     shadowColor: "#000",
     borderRadius: 12,
     shadowOffset: {
@@ -61,7 +76,7 @@ const desStyles = StyleSheet.create({
   },
   desWrapper: {
     marginTop: 16,
-    height: 500,
+    height: 590,
   },
   desText: {
     fontSize: 20,

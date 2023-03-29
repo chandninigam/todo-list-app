@@ -62,6 +62,23 @@ export function useTodos() {
     });
   }
 
+  function setTodoDescription(item, descValue) {
+    const index = todos.findIndex((obj) => {
+      return obj.todo_date_created === item.todo_date_created;
+    });
+    let newArrayTodo = [...todos];
+    newArrayTodo[index] = {
+      ...newArrayTodo[index],
+      description: descValue,
+    };
+    // console.log("--->", index, item);
+    setTodos(() => {
+      const updatedTodos = newArrayTodo;
+      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
+  }
+
   function deleteTodo(item) {
     const filterTodo = todos.filter((each) => each !== item);
     Alert.alert(
@@ -104,9 +121,10 @@ export function useTodos() {
   return {
     todos,
     setTodos,
-    setTodoCompleted,
     addTodo,
-    deleteAllTodos,
+    setTodoCompleted,
+    setTodoDescription,
     deleteTodo,
+    deleteAllTodos,
   };
 }

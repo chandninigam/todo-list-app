@@ -1,18 +1,10 @@
 // Import Libraries
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  Text,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { Entypo as EntypoIcon } from "@expo/vector-icons";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 import { useNavigation } from "@react-navigation/native";
-
-const { height } = Dimensions.get("window");
 
 export default function TodoCard({ item }) {
   const { deleteTodo, todos, setTodoCompleted } = useTodos();
