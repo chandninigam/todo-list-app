@@ -1,5 +1,5 @@
 // Import Libraries
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -8,10 +8,16 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Context } from "../contexts/AppContext";
+import { Context, useTodos } from "../contexts/AppContext";
 
-export function TodoDescription(props) {
+export function TodoEditScreen(props) {
+  const todo = props.route.params?.todo;
+  const [todoTitle, setTodoTitle] = useState(todo?.title || "");
+  const [todoDescription, setTodoDescription] = useState(
+    todo?.description || ""
+  );
   const { setShowClearTodosBtn } = useContext(Context);
+  const { addTodo, updateTodo } = useTodos();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -23,18 +29,42 @@ export function TodoDescription(props) {
 
   return (
     <View style={desStyles.desContainer}>
-      <Text.Bold style={desStyles.desTitle}>Title</Text.Bold>
+      <TextInput
+        value={todoTitle}
+        placeholder="Title"
+        onChangeText={(value) => {
+          setTodoTitle(value);
+        }}
+      />
       <View style={desStyles.desWrapper}>
         <TextInput
           editable
           multiline
           numberOfLines={4}
+          value={todoDescription}
           placeholder="Add Description"
           style={desStyles.desText}
+          onChangeText={(value) => {
+            setTodoDescription(value);
+          }}
         />
       </View>
-      <TouchableOpacity style={desStyles.desAddBtnTouchableOp}>
-        <Text.Bold style={desStyles.desAddBtnText}>Add</Text.Bold>
+      <TouchableOpacity
+        style={desStyles.desAddBtnTouchableOp}
+        onPress={() => {
+          if (todo) {
+            // upadte existing todo
+            console.log(todoTitle);
+            updateTodo(todo, todoTitle, todoDescription);
+          } else {
+            // save new todo
+            addTodo(todoTitle, todoDescription);
+          }
+        }}
+      >
+        <Text.Bold style={desStyles.desAddBtnText}>
+          {todo ? "Update" : "Add"}
+        </Text.Bold>
       </TouchableOpacity>
     </View>
   );

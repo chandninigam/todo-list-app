@@ -3,11 +3,12 @@ import { useContext, useEffect } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import Toast, { BaseToast } from "react-native-toast-message";
 // Import Components
 import TodoCard from "../components/TodoCard";
-import EmptyList from "../components/EmptyList";
+import LottieView from "../components/LottieView";
 import { AddTodoInputBtn } from "../components/AddTodoInputBtn";
-import { TodoDescription } from "../components/Description";
+import { TodoEditScreen } from "./TodoEditScreen";
 // Import Custom Hook
 import { useTodos, Context } from "../contexts/AppContext";
 
@@ -27,7 +28,7 @@ export function TodoNavigator() {
       />
       <TodoScreenStack.Screen
         name="TodoEditScreen"
-        component={TodoDescription}
+        component={TodoEditScreen}
       />
     </TodoScreenStack.Navigator>
   );
@@ -58,7 +59,7 @@ export function TodoListScreen() {
       <View style={styles.topWrapper}>
         {/* Conditonal rendering according to length of todos */}
         {getInCompletedTodosLength() < 1 ? (
-          <EmptyList
+          <LottieView
             path={require("../../assets/animations/emoji.json")}
             title="Empty List"
           />
@@ -74,6 +75,17 @@ export function TodoListScreen() {
       </View>
       {/* FOOTER */}
       <AddTodoInputBtn />
+      <Toast
+        config={{
+          success: (props) => (
+            <BaseToast
+              {...props}
+              text1Style={{ fontSize: 24 }}
+              style={{ borderLeftColor: "green" }}
+            />
+          ),
+        }}
+      />
     </View>
   );
 }

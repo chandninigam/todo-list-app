@@ -1,7 +1,7 @@
 // Import Libraries
 import { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import EmptyList from "../components/EmptyList";
+import LottieView from "../components/LottieView";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 import CompletedTodoCard from "../components/CompletedTodoCard";
@@ -22,7 +22,7 @@ export function CompletedTodoScreen() {
   return (
     <View style={completeTabStyle.wrapper}>
       {isAnyCompletedTodo === true ? (
-        <EmptyList
+        <LottieView
           path={require("../../assets/animations/thinking-man.json")}
           title="No Completed Tasks"
         />

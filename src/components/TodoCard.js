@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { Entypo as EntypoIcon } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 import { useNavigation } from "@react-navigation/native";
@@ -31,6 +32,12 @@ export default function TodoCard({ item }) {
             containerStyle={listStyles.checkbox}
             onPress={() => {
               setTodoCompleted(item);
+              Toast.show({
+                type: "success",
+                text1: "Completed task",
+                position: "bottom",
+                visibilityTime: 50000000,
+              });
             }}
           />
           <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>

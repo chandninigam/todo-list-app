@@ -33,10 +33,10 @@ export function ContextProvider({ children }) {
 export function useTodos() {
   const { setTodos, todos } = useContext(Context);
 
-  function addTodo(input) {
+  function addTodo(title, description) {
     const createdTodoObject = {
-      title: input,
-      description: "Long Description",
+      title: title,
+      description: description,
       is_completed: false,
       todo_date_created: new Date(),
       todo_date_completed: null,
@@ -48,12 +48,28 @@ export function useTodos() {
     });
   }
 
+  function updateTodo(item, title, description) {
+    const index = todos.findIndex((obj) => obj === item);
+    let newArrayTodo = [...todos];
+    newArrayTodo[index] = {
+      ...newArrayTodo[index],
+      title: title,
+      description: description,
+    };
+    setTodos(() => {
+      const updatedTodos = newArrayTodo;
+      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
+  }
+
   function setTodoCompleted(item) {
     const index = todos.findIndex((obj) => obj === item);
     let newArrayTodo = [...todos];
     newArrayTodo[index] = {
       ...newArrayTodo[index],
       is_completed: true,
+      todo_date_completed: new Date(),
     };
     setTodos(() => {
       const updatedTodos = newArrayTodo;
@@ -104,8 +120,9 @@ export function useTodos() {
   return {
     todos,
     setTodos,
-    setTodoCompleted,
     addTodo,
+    updateTodo,
+    setTodoCompleted,
     deleteAllTodos,
     deleteTodo,
   };
