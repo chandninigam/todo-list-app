@@ -38,8 +38,8 @@ export function useTodos() {
       title: title,
       description: description,
       is_completed: false,
-      todo_date_created: new Date(),
-      todo_date_completed: null,
+      date_created: new Date(),
+      date_completed: null,
     };
     setTodos((prev) => {
       const updatedTodos = [...prev, createdTodoObject];
@@ -69,7 +69,7 @@ export function useTodos() {
     newArrayTodo[index] = {
       ...newArrayTodo[index],
       is_completed: true,
-      todo_date_completed: new Date(),
+      date_completed: new Date(),
     };
     setTodos(() => {
       const updatedTodos = newArrayTodo;
