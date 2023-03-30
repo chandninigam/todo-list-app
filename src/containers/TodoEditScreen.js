@@ -55,7 +55,6 @@ export function TodoEditScreen(props) {
         onPress={() => {
           if (todo) {
             // upadte existing todo
-            console.log(todoTitle);
             updateTodo(todo, todoTitle, todoDescription);
           } else {
             // save new todo

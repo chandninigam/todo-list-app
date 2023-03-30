@@ -14,7 +14,9 @@ export default function CompletedTodoCard({ item }) {
         </View>
         <Text.Regular style={completedTodoCard.cardCompletedText}>
           Completed on:
-          {` ${new Date().getDate()} - ${new Date().toLocaleString("default", {
+          {` ${new Date(item.date_completed).getDate()}-${new Date(
+            item.date_completed
+          ).toLocaleString("default", {
             month: "long",
           })}`}
         </Text.Regular>
