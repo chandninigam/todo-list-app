@@ -44,8 +44,8 @@ export default function TodoCard({ item }) {
         </View>
         <Text.Regular style={listStyles.todoCardTextCreatedOn}>
           Created on :
-          {` ${new Date(item.todo_date_created).getDate()}-${new Date(
-            item.todo_date_created
+          {` ${new Date(item.date_created).getDate()}-${new Date(
+            item.date_created
           ).toLocaleString("default", { month: "long" })}`}
         </Text.Regular>
       </TouchableOpacity>

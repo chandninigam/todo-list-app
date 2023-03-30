@@ -5,10 +5,7 @@ import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
 export default function CompletedTodoCard({ item }) {
   if (item.is_completed) {
     return (
-      <View
-        key={item.todo_date_completed}
-        style={completedTodoCard.cardWrapper}
-      >
+      <View key={item.date_completed} style={completedTodoCard.cardWrapper}>
         <View style={completedTodoCard.cardTitleIconWrapper}>
           <Text.Regular style={completedTodoCard.cardTitle}>
             {item.title}
