@@ -11,6 +11,7 @@ import { AddTodoButton } from "../components/AddTodoButton";
 import { TodoEditScreen } from "./TodoEditScreen";
 // Import Custom Hook
 import { useTodos, Context } from "../contexts/AppContext";
+import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
 
 const TodoScreenStack = createStackNavigator();
 
@@ -79,7 +80,7 @@ export function TodoListScreen() {
           success: (props) => (
             <BaseToast
               {...props}
-              text1Style={{ fontSize: 24 }}
+              text1Style={{ fontSize: 20, fontWeight: "400" }}
               style={{ borderLeftColor: "green" }}
             />
           ),
