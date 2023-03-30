@@ -42,11 +42,12 @@ export default function TodoCard({ item }) {
             <EntypoIcon name="cross" size={28} color="red" />
           </TouchableOpacity>
         </View>
-        <Text.Regular style={listStyles.todoCardTextCreatedOn}>
-          Created on :
-          {` ${new Date(item.date_created).getDate()}-${new Date(
-            item.date_created
-          ).toLocaleString("default", { month: "long" })}`}
+        <Text.Regular
+          style={listStyles.todoCardTextCreatedOn}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {item.description}
         </Text.Regular>
       </TouchableOpacity>
     );
