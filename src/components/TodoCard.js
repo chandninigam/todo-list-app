@@ -26,9 +26,9 @@ export default function TodoCard({ item }) {
               setTodoCompleted(item);
               Toast.show({
                 type: "success",
-                text1: "Completed task",
+                text1: `Completed ${item.title} task`,
                 position: "bottom",
-                visibilityTime: 50000000,
+                visibilityTime: 1500,
               });
             }}
           />
