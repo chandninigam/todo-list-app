@@ -48,6 +48,21 @@ export function useTodos() {
     });
   }
 
+  function updateTodo(item, title, description) {
+    const index = todos.findIndex((obj) => obj === item);
+    let newArrayTodo = [...todos];
+    newArrayTodo[index] = {
+      ...newArrayTodo[index],
+      title: title,
+      description: description,
+    };
+    setTodos(() => {
+      const updatedTodos = newArrayTodo;
+      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
+  }
+
   function setTodoCompleted(item) {
     const index = todos.findIndex((obj) => obj === item);
     let newArrayTodo = [...todos];
@@ -105,8 +120,9 @@ export function useTodos() {
   return {
     todos,
     setTodos,
-    setTodoCompleted,
     addTodo,
+    updateTodo,
+    setTodoCompleted,
     deleteAllTodos,
     deleteTodo,
   };

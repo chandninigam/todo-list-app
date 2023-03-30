@@ -11,12 +11,14 @@ import { useNavigation } from "@react-navigation/native";
 import { Context, useTodos } from "../contexts/AppContext";
 
 export function TodoEditScreen(props) {
-  const [todoTitle, setTodoTitle] = useState();
-  const [description, setDescription] = useState();
-  const { setShowClearTodosBtn } = useContext(Context);
-  const { addTodo } = useTodos();
-  const navigation = useNavigation();
   const todo = props.route.params?.todo;
+  const [todoTitle, setTodoTitle] = useState(todo?.title || "");
+  const [todoDescription, setTodoDescription] = useState(
+    todo?.description || ""
+  );
+  const { setShowClearTodosBtn } = useContext(Context);
+  const { addTodo, updateTodo } = useTodos();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unSubscribe = navigation.addListener("focus", () => {
@@ -25,12 +27,10 @@ export function TodoEditScreen(props) {
     return unSubscribe;
   }, [navigation]);
 
-  // console.log(props.route.params.todo);
-
   return (
     <View style={desStyles.desContainer}>
       <TextInput
-        defaultValue={todo?.title || ""}
+        value={todoTitle}
         placeholder="Title"
         onChangeText={(value) => {
           setTodoTitle(value);
@@ -41,11 +41,11 @@ export function TodoEditScreen(props) {
           editable
           multiline
           numberOfLines={4}
+          value={todoDescription}
           placeholder="Add Description"
           style={desStyles.desText}
-          defaultValue={todo?.description || ""}
           onChangeText={(value) => {
-            setDescription(value);
+            setTodoDescription(value);
           }}
         />
       </View>
@@ -54,9 +54,11 @@ export function TodoEditScreen(props) {
         onPress={() => {
           if (todo) {
             // upadte existing todo
+            console.log(todoTitle);
+            updateTodo(todo, todoTitle, todoDescription);
           } else {
             // save new todo
-            addTodo(todoTitle, description);
+            addTodo(todoTitle, todoDescription);
           }
         }}
       >
