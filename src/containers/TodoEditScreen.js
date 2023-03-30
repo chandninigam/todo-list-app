@@ -28,29 +28,30 @@ export function TodoEditScreen(props) {
   }, [navigation]);
 
   return (
-    <View style={desStyles.desContainer}>
+    <View style={styles.todoEditScreenWrapper}>
       <TextInput
         value={todoTitle}
         placeholder="Title"
+        style={styles.todoEditScreenTitle}
         onChangeText={(value) => {
           setTodoTitle(value);
         }}
       />
-      <View style={desStyles.desWrapper}>
+      <View style={styles.todoEditScreenDescriptionWrapper}>
         <TextInput
           editable
           multiline
           numberOfLines={4}
           value={todoDescription}
           placeholder="Add Description"
-          style={desStyles.desText}
+          style={styles.todoEditScreenDescriptionText}
           onChangeText={(value) => {
             setTodoDescription(value);
           }}
         />
       </View>
       <TouchableOpacity
-        style={desStyles.desAddBtnTouchableOp}
+        style={styles.todoEditScreenAddBtn}
         onPress={() => {
           if (todo) {
             // upadte existing todo
@@ -62,7 +63,7 @@ export function TodoEditScreen(props) {
           }
         }}
       >
-        <Text.Bold style={desStyles.desAddBtnText}>
+        <Text.Bold style={styles.todoEditScreenAddBtnText}>
           {todo ? "Update" : "Add"}
         </Text.Bold>
       </TouchableOpacity>
@@ -70,8 +71,8 @@ export function TodoEditScreen(props) {
   );
 }
 
-const desStyles = StyleSheet.create({
-  desContainer: {
+const styles = StyleSheet.create({
+  todoEditScreenWrapper: {
     display: "flex",
     backgroundColor: "white",
     padding: 24,
@@ -86,17 +87,18 @@ const desStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 2,
   },
-  desTitle: {
-    fontSize: 32,
+  todoEditScreenTitle: {
+    fontSize: 24,
+    fontWeight: "600",
   },
-  desWrapper: {
+  todoEditScreenDescriptionWrapper: {
     marginTop: 16,
     height: 500,
   },
-  desText: {
+  todoEditScreenDescriptionText: {
     fontSize: 20,
   },
-  desAddBtnTouchableOp: {
+  todoEditScreenAddBtn: {
     display: "flex",
     alignSelf: "flex-end",
     padding: 12,
@@ -104,7 +106,7 @@ const desStyles = StyleSheet.create({
     backgroundColor: "#548af0",
     borderRadius: 12,
   },
-  desAddBtnText: {
+  todoEditScreenAddBtnText: {
     fontSize: 20,
     color: "white",
   },

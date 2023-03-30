@@ -54,9 +54,9 @@ export function TodoListScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.todoListScreenWrapper}>
       {/* HEADER */}
-      <View style={styles.topWrapper}>
+      <View style={styles.todoListScreenListViewWrapper}>
         {/* Conditonal rendering according to length of todos */}
         {getInCompletedTodosLength() < 1 ? (
           <LottieView
@@ -65,7 +65,6 @@ export function TodoListScreen() {
           />
         ) : (
           <FlatList
-            style={styles.flatList}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
             data={todos}
@@ -91,11 +90,11 @@ export function TodoListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  todoListScreenWrapper: {
     flex: 1,
     backgroundColor: "#fff",
   },
-  topWrapper: {
+  todoListScreenListViewWrapper: {
     display: "flex",
     flex: 1,
   },
