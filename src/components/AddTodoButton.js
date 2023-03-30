@@ -1,24 +1,13 @@
 // Import Libraries
-import { useState } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-// Import Custom Hook
-import { useTodos } from "../contexts/AppContext";
 
-const { height } = Dimensions.get("window");
-
-export function AddTodoInputBtn() {
+export function AddTodoButton() {
   const navigate = useNavigation();
 
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.addTodoBtnWrapper}>
       <TouchableOpacity
         style={styles.addTodoBtn}
         onPress={() => {
@@ -37,7 +26,7 @@ export function AddTodoInputBtn() {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  addTodoBtnWrapper: {
     display: "flex",
     flexDirection: "row",
     marginHorizontal: 12,
@@ -53,7 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 10,
     paddingVertical: 12,
-    borderRadius: height / 24,
+    borderRadius: 32,
     shadowColor: "#548af",
     shadowOffset: {
       width: 0,

@@ -20,7 +20,7 @@ export function CompletedTodoScreen() {
   }, [todos]);
 
   return (
-    <View style={completeTabStyle.wrapper}>
+    <View style={completeTabStyle.completedTodoScreenContainer}>
       {isAnyCompletedTodo === true ? (
         <LottieView
           path={require("../../assets/animations/thinking-man.json")}
@@ -39,7 +39,7 @@ export function CompletedTodoScreen() {
 }
 
 const completeTabStyle = StyleSheet.create({
-  wrapper: {
+  completedTodoScreenContainer: {
     display: "flex",
     flex: 1,
     backgroundColor: "#fff",

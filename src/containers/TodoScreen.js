@@ -7,7 +7,7 @@ import Toast, { BaseToast } from "react-native-toast-message";
 // Import Components
 import TodoCard from "../components/TodoCard";
 import LottieView from "../components/LottieView";
-import { AddTodoInputBtn } from "../components/AddTodoInputBtn";
+import { AddTodoButton } from "../components/AddTodoButton";
 import { TodoEditScreen } from "./TodoEditScreen";
 // Import Custom Hook
 import { useTodos, Context } from "../contexts/AppContext";
@@ -74,7 +74,7 @@ export function TodoListScreen() {
         )}
       </View>
       {/* FOOTER */}
-      <AddTodoInputBtn />
+      <AddTodoButton />
       <Toast
         config={{
           success: (props) => (

@@ -1,19 +1,11 @@
 // Import Libraries
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  Text,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { Entypo as EntypoIcon } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
 import { useNavigation } from "@react-navigation/native";
-
-const { height } = Dimensions.get("window");
 
 export default function TodoCard({ item }) {
   const { deleteTodo, todos, setTodoCompleted } = useTodos();
@@ -22,14 +14,14 @@ export default function TodoCard({ item }) {
   if (!item.is_completed) {
     return (
       <TouchableOpacity
-        style={listStyles.listWrapper}
+        style={listStyles.todoCardWrapper}
         onPress={() => {
           navigate("TodoEditScreen", { todo: item });
         }}
       >
-        <View style={listStyles.topContainer}>
+        <View style={listStyles.todoCardTitleIconWrapper}>
           <CheckBox
-            containerStyle={listStyles.checkbox}
+            containerStyle={listStyles.todoCardCheckBox}
             onPress={() => {
               setTodoCompleted(item);
               Toast.show({
@@ -40,9 +32,9 @@ export default function TodoCard({ item }) {
               });
             }}
           />
-          <Text.Regular style={listStyles.listText}>{item.title}</Text.Regular>
+          <Text.Regular style={listStyles.cardTitle}>{item.title}</Text.Regular>
           <TouchableOpacity
-            style={listStyles.deleteIcon}
+            style={listStyles.todoCardDeleteIcon}
             onPress={() => {
               deleteTodo(item);
             }}
@@ -50,7 +42,7 @@ export default function TodoCard({ item }) {
             <EntypoIcon name="cross" size={28} color="red" />
           </TouchableOpacity>
         </View>
-        <Text.Regular style={listStyles.textCreatedOn}>
+        <Text.Regular style={listStyles.todoCardTextCreatedOn}>
           Created on :
           {` ${new Date(item.todo_date_created).getDate()}-${new Date(
             item.todo_date_created
@@ -63,7 +55,7 @@ export default function TodoCard({ item }) {
 }
 
 const listStyles = StyleSheet.create({
-  listWrapper: {
+  todoCardWrapper: {
     display: "flex",
     backgroundColor: "white",
     marginBottom: 24,
@@ -77,30 +69,30 @@ const listStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 2,
   },
-  topContainer: {
+  todoCardTitleIconWrapper: {
     display: "flex",
     flexDirection: "row",
   },
-  checkbox: {
+  todoCardCheckBox: {
     display: "flex",
     alignSelf: "center",
     paddingLeft: 4,
     paddingRight: 0,
     paddingVertical: 6,
   },
-  listText: {
+  cardTitle: {
     color: "black",
     fontSize: 20,
     flex: 0.9,
     display: "flex",
     alignSelf: "center",
   },
-  deleteIcon: {
+  todoCardDeleteIcon: {
     display: "flex",
     alignSelf: "center",
     flex: 0.1,
   },
-  textCreatedOn: {
+  todoCardTextCreatedOn: {
     fontSize: 16,
     marginBottom: 8,
     paddingHorizontal: 16,
