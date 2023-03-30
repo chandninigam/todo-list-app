@@ -33,10 +33,10 @@ export function ContextProvider({ children }) {
 export function useTodos() {
   const { setTodos, todos } = useContext(Context);
 
-  function addTodo(input) {
+  function addTodo(title, description) {
     const createdTodoObject = {
-      title: input,
-      description: "Long Description",
+      title: title,
+      description: description,
       is_completed: false,
       todo_date_created: new Date(),
       todo_date_completed: null,

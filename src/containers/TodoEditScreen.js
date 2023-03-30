@@ -1,5 +1,5 @@
 // Import Libraries
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -8,10 +8,13 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Context } from "../contexts/AppContext";
+import { Context, useTodos } from "../contexts/AppContext";
 
 export function TodoEditScreen(props) {
+  const [todoTitle, setTodoTitle] = useState();
+  const [description, setDescription] = useState();
   const { setShowClearTodosBtn } = useContext(Context);
+  const { addTodo } = useTodos();
   const navigation = useNavigation();
   const todo = props.route.params?.todo;
 
@@ -26,7 +29,13 @@ export function TodoEditScreen(props) {
 
   return (
     <View style={desStyles.desContainer}>
-      <TextInput defaultValue={todo?.title || ""} />
+      <TextInput
+        defaultValue={todo?.title || ""}
+        placeholder="Title"
+        onChangeText={(value) => {
+          setTodoTitle(value);
+        }}
+      />
       <View style={desStyles.desWrapper}>
         <TextInput
           editable
@@ -35,6 +44,9 @@ export function TodoEditScreen(props) {
           placeholder="Add Description"
           style={desStyles.desText}
           defaultValue={todo?.description || ""}
+          onChangeText={(value) => {
+            setDescription(value);
+          }}
         />
       </View>
       <TouchableOpacity
@@ -44,6 +56,7 @@ export function TodoEditScreen(props) {
             // upadte existing todo
           } else {
             // save new todo
+            addTodo(todoTitle, description);
           }
         }}
       >
