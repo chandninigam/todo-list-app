@@ -19,6 +19,11 @@ export function CompletedTodoScreen() {
       : setIsAnyCompletedTodo(false);
   }, [todos]);
 
+  const sortedByCompletedTodo = todos.sort(
+    (a, b) =>
+      Number(new Date(b.date_completed)) - Number(new Date(a.date_completed))
+  );
+
   return (
     <View style={completeTabStyle.completedTodoScreenContainer}>
       {isAnyCompletedTodo === true ? (
@@ -28,7 +33,7 @@ export function CompletedTodoScreen() {
         />
       ) : (
         <FlatList
-          data={todos}
+          data={sortedByCompletedTodo}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
           renderItem={({ item }) => <CompletedTodoCard item={item} />}
