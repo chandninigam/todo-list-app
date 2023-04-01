@@ -8,6 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Model from "react-native-modal";
 import { Context, useTodos } from "../contexts/AppContext";
 
 export function TodoEditScreen(props) {
@@ -16,6 +17,7 @@ export function TodoEditScreen(props) {
   const [todoDescription, setTodoDescription] = useState(
     todo?.description || ""
   );
+  const [isVisibleModal, setIsVisibleModal] = useState(true);
   const { setShowClearTodosBtn } = useContext(Context);
   const { addTodo, updateTodo } = useTodos();
   const navigation = useNavigation();
@@ -28,45 +30,48 @@ export function TodoEditScreen(props) {
   }, [navigation]);
 
   return (
-    <View style={styles.todoEditScreenWrapper}>
-      <TextInput
-        value={todoTitle}
-        placeholder="Title"
-        style={styles.todoEditScreenTitle}
-        onChangeText={(value) => {
-          setTodoTitle(value);
-        }}
-      />
-      <View style={styles.todoEditScreenDescriptionWrapper}>
+    <Model isVisible={isVisibleModal}>
+      <View style={styles.todoEditScreenWrapper}>
         <TextInput
-          editable
-          multiline
-          numberOfLines={4}
-          value={todoDescription}
-          placeholder="Add Description"
-          style={styles.todoEditScreenDescriptionText}
+          value={todoTitle}
+          placeholder="Title"
+          style={styles.todoEditScreenTitle}
           onChangeText={(value) => {
-            setTodoDescription(value);
+            setTodoTitle(value);
           }}
         />
+        <View style={styles.todoEditScreenDescriptionWrapper}>
+          <TextInput
+            editable
+            multiline
+            numberOfLines={4}
+            value={todoDescription}
+            placeholder="Add Description"
+            style={styles.todoEditScreenDescriptionText}
+            onChangeText={(value) => {
+              setTodoDescription(value);
+            }}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.todoEditScreenAddBtn}
+          onPress={() => {
+            setIsVisibleModal(!isVisibleModal);
+            if (todo) {
+              // upadte existing todo
+              updateTodo(todo, todoTitle, todoDescription);
+            } else {
+              // save new todo
+              addTodo(todoTitle, todoDescription);
+            }
+          }}
+        >
+          <Text.Bold style={styles.todoEditScreenAddBtnText}>
+            {todo ? "Update" : "Add"}
+          </Text.Bold>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.todoEditScreenAddBtn}
-        onPress={() => {
-          if (todo) {
-            // upadte existing todo
-            updateTodo(todo, todoTitle, todoDescription);
-          } else {
-            // save new todo
-            addTodo(todoTitle, todoDescription);
-          }
-        }}
-      >
-        <Text.Bold style={styles.todoEditScreenAddBtnText}>
-          {todo ? "Update" : "Add"}
-        </Text.Bold>
-      </TouchableOpacity>
-    </View>
+    </Model>
   );
 }
 
