@@ -2,16 +2,20 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { Context, useTodos } from "../contexts/AppContext";
 
 export function AddTodoButton() {
   const navigate = useNavigation();
+  const { setShowTodoEditModal } = useTodos();
 
   return (
     <View style={styles.addTodoBtnWrapper}>
       <TouchableOpacity
         style={styles.addTodoBtn}
         onPress={() => {
-          navigate.navigate("TodoEditScreen");
+          // navigate.navigate("TodoEditScreen");
+          setShowTodoEditModal(true);
         }}
       >
         <AntDesignIcon

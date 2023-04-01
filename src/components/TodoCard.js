@@ -5,18 +5,24 @@ import { Entypo as EntypoIcon } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
-import { useNavigation } from "@react-navigation/native";
 
 export default function TodoCard({ item }) {
-  const { deleteTodo, todos, setTodoCompleted } = useTodos();
-  const { navigate } = useNavigation();
+  const {
+    deleteTodo,
+    todos,
+    setTodoCompleted,
+    setShowTodoEditModal,
+    setSelectedEditTodo,
+  } = useTodos();
 
   if (!item.is_completed) {
     return (
       <TouchableOpacity
         style={listStyles.todoCardWrapper}
         onPress={() => {
-          navigate("TodoEditScreen", { todo: item });
+          // navigate("TodoEditScreen", { todo: item });
+          setShowTodoEditModal(true);
+          setSelectedEditTodo(item);
         }}
       >
         <View style={listStyles.todoCardTitleIconWrapper}>
