@@ -1,16 +1,19 @@
 import { useState, createContext, useEffect, useContext } from "react";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TODOS_STORAGE_KEY } from "../constants";
 
 export const Context = createContext();
 
 export function ContextProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [showClearTodosBtn, setShowClearTodosBtn] = useState(true);
+  const [showTodoEditModal, setShowTodoEditModal] = useState(false);
+  const [selectedEditTodo, setSelectedEditTodo] = useState(null);
 
   useEffect(() => {
     (async function getTodos() {
-      const todosString = await AsyncStorage.getItem("TodoAppData");
+      const todosString = await AsyncStorage.getItem(TODOS_STORAGE_KEY);
       const todos = JSON.parse(todosString) || [];
       setTodos(todos);
     })();
@@ -23,6 +26,10 @@ export function ContextProvider({ children }) {
         setTodos,
         showClearTodosBtn,
         setShowClearTodosBtn,
+        showTodoEditModal,
+        setShowTodoEditModal,
+        selectedEditTodo,
+        setSelectedEditTodo,
       }}
     >
       {children}
@@ -31,34 +38,40 @@ export function ContextProvider({ children }) {
 }
 
 export function useTodos() {
-  const { setTodos, todos } = useContext(Context);
+  const {
+    todos,
+    setTodos,
+    showTodoEditModal,
+    setShowTodoEditModal,
+    selectedEditTodo,
+    setSelectedEditTodo,
+  } = useContext(Context);
 
-  function addTodo(title, description) {
+  function addTodo(todo) {
+    // Add id for Every new Todo
     const createdTodoObject = {
-      title: title,
-      description: description,
+      ...todo,
       is_completed: false,
       date_created: new Date(),
       date_completed: null,
     };
     setTodos((prev) => {
       const updatedTodos = [...prev, createdTodoObject];
-      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(updatedTodos));
       return updatedTodos;
     });
   }
 
-  function updateTodo(item, title, description) {
-    const index = todos.findIndex((obj) => obj === item);
-    let newArrayTodo = [...todos];
-    newArrayTodo[index] = {
-      ...newArrayTodo[index],
-      title: title,
-      description: description,
+  function updateTodo(todo, updatedTodo) {
+    // Compare on basis of id
+    const index = todos.findIndex((todoObj) => todoObj.title === todo.title);
+    let updatedTodos = [...todos];
+    updatedTodos[index] = {
+      ...updatedTodos[index],
+      ...updatedTodo,
     };
     setTodos(() => {
-      const updatedTodos = newArrayTodo;
-      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(updatedTodos));
       return updatedTodos;
     });
   }
@@ -73,7 +86,7 @@ export function useTodos() {
     };
     setTodos(() => {
       const updatedTodos = newArrayTodo;
-      AsyncStorage.setItem("TodoAppData", JSON.stringify(updatedTodos));
+      AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(updatedTodos));
       return updatedTodos;
     });
   }
@@ -92,7 +105,7 @@ export function useTodos() {
           text: "Remove",
           onPress: () => {
             setTodos(filterTodo);
-            AsyncStorage.setItem("TodoAppData", JSON.stringify(filterTodo));
+            AsyncStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(filterTodo));
           },
           style: "destructive",
         },
@@ -109,8 +122,12 @@ export function useTodos() {
       {
         text: "Delete",
         onPress: async () => {
-          setTodos([]);
-          await AsyncStorage.removeItem("TodoAppData");
+          const completedTodos = todos.filter((t) => t.is_completed);
+          setTodos(completedTodos);
+          await AsyncStorage.setItem(
+            TODOS_STORAGE_KEY,
+            JSON.stringify(completedTodos)
+          );
         },
         style: "destructive",
       },
@@ -120,6 +137,10 @@ export function useTodos() {
   return {
     todos,
     setTodos,
+    showTodoEditModal,
+    setShowTodoEditModal,
+    selectedEditTodo,
+    setSelectedEditTodo,
     addTodo,
     updateTodo,
     setTodoCompleted,

@@ -1,16 +1,15 @@
 // Import Libraries
 import React, { useContext } from "react";
 import { TouchableOpacity, Dimensions } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   AntDesign as AntDesignIcon,
   Foundation as FoundationIcon,
 } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import { useNavigation } from "@react-navigation/native";
 // Import Containers
-import { TodoNavigator } from "./containers/TodoScreen";
+import { TodoListScreen } from "./containers/TodoScreen";
 import { CompletedTodoScreen } from "./containers/CompletedTodoScreen";
 // Import Fonts
 import SourceSansRegular from "../assets/fonts/source-sans-regular.ttf";
@@ -51,27 +50,32 @@ export function EntryAppNavigator() {
       >
         <BottomTab.Screen
           name="Todos"
-          component={TodoNavigator}
+          component={TodoListScreen}
           options={{
             title: "Todos",
             headerTitleStyle: {
               fontSize: 24,
               fontFamily: "SourceSansMedium",
             },
-            headerRight: () =>
-              showClearTodosBtn ? (
+            headerRight: () => {
+              const uncompletedTodos = todos.filter((t) => !t.is_completed);
+              const isDisabled = uncompletedTodos.length < 1;
+              const noop = () => {};
+              if (!showClearTodosBtn) return null;
+              return (
                 <TouchableOpacity
-                  disabled={todos.length < 1}
-                  onPress={deleteAllTodos}
+                  onPress={isDisabled ? noop : deleteAllTodos}
                   style={{ marginRight: height / 40 }}
                 >
                   <AntDesignIcon
+                    disabled={isDisabled}
                     name="delete"
                     size={24}
-                    color={todos.length < 1 ? "#c1cde0" : "red"}
+                    color={isDisabled ? "#c1cde0" : "red"}
                   />
                 </TouchableOpacity>
-              ) : null,
+              );
+            },
             tabBarIcon: ({ size, focused }) => (
               <FoundationIcon
                 name="page-edit"
@@ -88,9 +92,8 @@ export function EntryAppNavigator() {
             title: "Completed",
             headerTitle: "Completed Todos",
             headerTitleStyle: {
-              fontSize: height / 36,
-              fontWeight: "700",
-              fontFamily: "SourceSansBold",
+              fontSize: 24,
+              fontFamily: "SourceSansMedium",
             },
             tabBarIcon: ({ size, focused }) => (
               <AntDesignIcon
