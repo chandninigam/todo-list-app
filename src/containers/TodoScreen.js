@@ -32,10 +32,11 @@ export function TodoListScreen(props) {
     updateTodo,
   } = useTodos();
   // console.log("selectedTodo", selectedEditTodo?.title);
-  // const [todoTitle, setTodoTitle] = useState(selectedEditTodo?.title || "");
-  // const [todoDescription, setTodoDescription] = useState(
-  //   selectedEditTodo?.description || ""
-  // );
+  const [todoTitle, setTodoTitle] = useState(selectedEditTodo?.title || "");
+  const [todoDescription, setTodoDescription] = useState(
+    selectedEditTodo?.description || ""
+  );
+
   const { setShowClearTodosBtn } = useContext(Context);
   const navigation = useNavigation();
 
@@ -58,11 +59,12 @@ export function TodoListScreen(props) {
       <Modal isVisible={showTodoEditModal}>
         <View style={modalStyles.todoEditScreenWrapper}>
           <TextInput
-            value={selectedEditTodo?.title}
+            // value={selectedEditTodo?.title}
+            value={todoTitle}
             placeholder="Title"
             style={modalStyles.todoEditScreenTitle}
             onChangeText={(value) => {
-              // setTodoTitle(value);
+              setTodoTitle(value);
             }}
           />
           <View style={modalStyles.todoEditScreenDescriptionWrapper}>
@@ -70,11 +72,12 @@ export function TodoListScreen(props) {
               editable
               multiline
               numberOfLines={4}
-              value={selectedEditTodo?.description}
+              // value={selectedEditTodo?.description}
+              value={todoDescription}
               placeholder="Add Description"
               style={modalStyles.todoEditScreenDescriptionText}
               onChangeText={(value) => {
-                // setTodoDescription(value);
+                setTodoDescription(value);
               }}
             />
           </View>

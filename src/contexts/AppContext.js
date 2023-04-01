@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect, useContext } from "react";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from "react-native-uuid";
 import { TODOS_STORAGE_KEY } from "../constants";
 
 export const Context = createContext();
@@ -51,6 +52,7 @@ export function useTodos() {
     // Add id for Every new Todo
     const createdTodoObject = {
       ...todo,
+      id: uuid.v4(),
       isCompleted: false,
       dateCreated: new Date(),
       dateCompleted: null,
@@ -64,7 +66,7 @@ export function useTodos() {
 
   function updateTodo(todo, updatedTodo) {
     // Compare on basis of id
-    const index = todos.findIndex((todoObj) => todoObj.title === todo.title);
+    const index = todos.findIndex((todoObj) => todoObj.id === todo.id);
     let updatedTodos = [...todos];
     updatedTodos[index] = {
       ...updatedTodos[index],
@@ -77,7 +79,7 @@ export function useTodos() {
   }
 
   function setTodoCompleted(item) {
-    const index = todos.findIndex((obj) => obj === item);
+    const index = todos.findIndex((obj) => obj.id === item.id);
     let newArrayTodo = [...todos];
     newArrayTodo[index] = {
       ...newArrayTodo[index],
@@ -92,7 +94,7 @@ export function useTodos() {
   }
 
   function deleteTodo(item) {
-    const filterTodo = todos.filter((each) => each !== item);
+    const filterTodo = todos.filter((each) => each.id !== item.id);
     Alert.alert(
       "Delete",
       `Do you really want to remove ${`"${item.title}"`} ?`,
