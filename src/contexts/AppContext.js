@@ -51,9 +51,9 @@ export function useTodos() {
     // Add id for Every new Todo
     const createdTodoObject = {
       ...todo,
-      is_completed: false,
-      date_created: new Date(),
-      date_completed: null,
+      isCompleted: false,
+      dateCreated: new Date(),
+      dateCompleted: null,
     };
     setTodos((prev) => {
       const updatedTodos = [...prev, createdTodoObject];
@@ -81,8 +81,8 @@ export function useTodos() {
     let newArrayTodo = [...todos];
     newArrayTodo[index] = {
       ...newArrayTodo[index],
-      is_completed: true,
-      date_completed: new Date(),
+      isCompleted: true,
+      dateCompleted: new Date(),
     };
     setTodos(() => {
       const updatedTodos = newArrayTodo;
@@ -122,7 +122,7 @@ export function useTodos() {
       {
         text: "Delete",
         onPress: async () => {
-          const completedTodos = todos.filter((t) => t.is_completed);
+          const completedTodos = todos.filter((t) => t.isCompleted);
           setTodos(completedTodos);
           await AsyncStorage.setItem(
             TODOS_STORAGE_KEY,

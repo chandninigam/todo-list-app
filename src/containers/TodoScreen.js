@@ -22,12 +22,6 @@ import { useTodos, Context } from "../contexts/AppContext";
 import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
 
 export function TodoListScreen(props) {
-  // const todo = props.route.params?.todo;
-  // const todo = {};
-  // const [todoTitle, setTodoTitle] = useState("");
-  // const [todoDescription, setTodoDescription] = useState("");
-  // const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const { setShowClearTodosBtn } = useContext(Context);
   const {
     todos,
     showTodoEditModal,
@@ -37,6 +31,12 @@ export function TodoListScreen(props) {
     addTodo,
     updateTodo,
   } = useTodos();
+  // console.log("selectedTodo", selectedEditTodo?.title);
+  // const [todoTitle, setTodoTitle] = useState(selectedEditTodo?.title || "");
+  // const [todoDescription, setTodoDescription] = useState(
+  //   selectedEditTodo?.description || ""
+  // );
+  const { setShowClearTodosBtn } = useContext(Context);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export function TodoListScreen(props) {
 
   function getInCompletedTodosLength() {
     const getInCompletedTodos = todos.filter(
-      (todo) => todo.is_completed === false
+      (todo) => todo.isCompleted === false
     );
     return getInCompletedTodos.length;
   }
@@ -78,26 +78,36 @@ export function TodoListScreen(props) {
               }}
             />
           </View>
-          <TouchableOpacity
-            style={modalStyles.todoEditScreenAddBtn}
-            onPress={() => {
-              setShowTodoEditModal(false);
-              if (selectedEditTodo) {
-                // upadte existing todo
-                updateTodo(selectedEditTodo, {
-                  title: "abc",
-                  description: "abc2",
-                });
-              } else {
-                // save new todo
-                addTodo({ title: "test5", description: "test5" });
-              }
-            }}
-          >
-            <Text.Bold style={modalStyles.todoEditScreenAddBtnText}>
-              {selectedEditTodo ? "Update" : "Add"}
-            </Text.Bold>
-          </TouchableOpacity>
+          <View style={modalStyles.actionsWrapper}>
+            <TouchableOpacity
+              style={modalStyles.primaryBtn}
+              onPress={() => {
+                setShowTodoEditModal(false);
+                if (selectedEditTodo) {
+                  // upadte existing todo
+                  updateTodo(selectedEditTodo, {
+                    title: "updating",
+                    description: "updating description",
+                  });
+                } else {
+                  // save new todo
+                  addTodo({ title: "test12", description: "test12" });
+                }
+              }}
+            >
+              <Text.Bold style={modalStyles.primaryBtnText}>
+                {selectedEditTodo ? "Update" : "Add"}
+              </Text.Bold>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={modalStyles.secondaryBtn}
+              onPress={() => {
+                setShowTodoEditModal(false);
+              }}
+            >
+              <Text.Bold style={modalStyles.secondaryBtnText}>Cancel</Text.Bold>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
       {/* HEADER */}
@@ -172,15 +182,33 @@ const modalStyles = StyleSheet.create({
   todoEditScreenDescriptionText: {
     fontSize: 20,
   },
-  todoEditScreenAddBtn: {
+  actionsWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  primaryBtn: {
     display: "flex",
     alignSelf: "flex-end",
     padding: 12,
     marginTop: 8,
     backgroundColor: "#548af0",
-    borderRadius: 12,
+    borderRadius: 6,
+    marginHorizontal: 12,
   },
-  todoEditScreenAddBtnText: {
+  primaryBtnText: {
+    fontSize: 20,
+    color: "white",
+  },
+  secondaryBtn: {
+    display: "flex",
+    alignSelf: "flex-end",
+    padding: 12,
+    marginTop: 8,
+    backgroundColor: "#548af0",
+    borderRadius: 6,
+  },
+  secondaryBtnText: {
     fontSize: 20,
     color: "white",
   },

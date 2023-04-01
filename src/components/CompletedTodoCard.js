@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from "react-native";
 import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
 
 export default function CompletedTodoCard({ item }) {
-  if (item.is_completed) {
+  if (item.isCompleted) {
     return (
-      <View key={item.date_completed} style={completedTodoCard.cardWrapper}>
+      <View key={item.dateCompleted} style={completedTodoCard.cardWrapper}>
         <View style={completedTodoCard.cardTitleIconWrapper}>
           <Text.Regular style={completedTodoCard.cardTitle}>
             {item.title}
@@ -14,8 +14,8 @@ export default function CompletedTodoCard({ item }) {
         </View>
         <Text.Regular style={completedTodoCard.cardCompletedText}>
           Completed on:
-          {` ${new Date(item.date_completed).getDate()}-${new Date(
-            item.date_completed
+          {` ${new Date(item.dateCompleted).getDate()}-${new Date(
+            item.dateCompleted
           ).toLocaleString("default", {
             month: "long",
           })}`}

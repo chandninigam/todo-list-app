@@ -7,15 +7,15 @@ import { Context, useTodos } from "../contexts/AppContext";
 
 export function AddTodoButton() {
   const navigate = useNavigation();
-  const { setShowTodoEditModal } = useTodos();
+  const { setShowTodoEditModal, setSelectedEditTodo } = useTodos();
 
   return (
     <View style={styles.addTodoBtnWrapper}>
       <TouchableOpacity
         style={styles.addTodoBtn}
         onPress={() => {
-          // navigate.navigate("TodoEditScreen");
           setShowTodoEditModal(true);
+          setSelectedEditTodo(undefined);
         }}
       >
         <AntDesignIcon

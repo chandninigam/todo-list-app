@@ -12,7 +12,7 @@ export function CompletedTodoScreen() {
 
   useEffect(() => {
     const filteredIsComplted = todos.filter((todo) => {
-      return todo.is_completed === true;
+      return todo.isCompleted === true;
     });
     filteredIsComplted.length < 1
       ? setIsAnyCompletedTodo(true)
@@ -21,7 +21,7 @@ export function CompletedTodoScreen() {
 
   const sortedByCompletedTodo = todos.sort(
     (a, b) =>
-      Number(new Date(b.date_completed)) - Number(new Date(a.date_completed))
+      Number(new Date(b.dateCompleted)) - Number(new Date(a.dateCompleted))
   );
 
   return (
