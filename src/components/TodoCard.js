@@ -15,12 +15,11 @@ export default function TodoCard({ item }) {
     setSelectedEditTodo,
   } = useTodos();
 
-  if (!item.is_completed) {
+  if (!item.isCompleted) {
     return (
       <TouchableOpacity
         style={listStyles.todoCardWrapper}
         onPress={() => {
-          // navigate("TodoEditScreen", { todo: item });
           setShowTodoEditModal(true);
           setSelectedEditTodo(item);
         }}

@@ -22,7 +22,8 @@
     "react-native": "0.71.4",
     "react-native-elements": "^3.4.3",
     "react-native-modal": "^13.0.1",
-    "react-native-toast-message": "^2.1.6"
+    "react-native-toast-message": "^2.1.6",
+    "react-native-uuid": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

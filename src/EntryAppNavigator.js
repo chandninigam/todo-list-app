@@ -58,7 +58,7 @@ export function EntryAppNavigator() {
               fontFamily: "SourceSansMedium",
             },
             headerRight: () => {
-              const uncompletedTodos = todos.filter((t) => !t.is_completed);
+              const uncompletedTodos = todos.filter((t) => !t.isCompleted);
               const isDisabled = uncompletedTodos.length < 1;
               const noop = () => {};
               if (!showClearTodosBtn) return null;
