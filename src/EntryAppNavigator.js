@@ -22,8 +22,8 @@ const { height } = Dimensions.get("window");
 const BottomTab = createBottomTabNavigator();
 
 export function EntryAppNavigator() {
-  const { showClearTodosBtn } = useContext(Context);
-  const { deleteAllTodos, todos } = useTodos();
+  const { showClearTodosBtn, showClearCompletedTodosBtn } = useContext(Context);
+  const { deleteAllTodos, todos, deletedAllCompletedTodos } = useTodos();
 
   const [loaded] = useFonts({
     SourceSansRegular: SourceSansRegular,
@@ -94,6 +94,25 @@ export function EntryAppNavigator() {
             headerTitleStyle: {
               fontSize: 24,
               fontFamily: "SourceSansMedium",
+            },
+            headerRight: () => {
+              const completedTodos = todos.filter((t) => t.isCompleted);
+              const isDisabled = completedTodos.length < 1;
+              const noop = () => {};
+              if (!showClearCompletedTodosBtn) return null;
+              return (
+                <TouchableOpacity
+                  onPress={isDisabled ? noop : deletedAllCompletedTodos}
+                  style={{ marginRight: height / 40 }}
+                >
+                  <AntDesignIcon
+                    disabled={isDisabled}
+                    name="delete"
+                    size={24}
+                    color={isDisabled ? "#c1cde0" : "red"}
+                  />
+                </TouchableOpacity>
+              );
             },
             tabBarIcon: ({ size, focused }) => (
               <AntDesignIcon
