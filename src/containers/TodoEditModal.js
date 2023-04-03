@@ -54,6 +54,14 @@ export function TodoEditModal() {
         </View>
         <View style={modalStyles.actionsWrapper}>
           <TouchableOpacity
+            style={modalStyles.secondaryBtn}
+            onPress={() => {
+              setShowTodoEditModal(false);
+            }}
+          >
+            <Text.Bold style={modalStyles.secondaryBtnText}>Cancel</Text.Bold>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={modalStyles.primaryBtn}
             onPress={() => {
               setShowTodoEditModal(false);
@@ -72,14 +80,6 @@ export function TodoEditModal() {
             <Text.Bold style={modalStyles.primaryBtnText}>
               {selectedEditTodo ? "Update" : "Add"}
             </Text.Bold>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={modalStyles.secondaryBtn}
-            onPress={() => {
-              setShowTodoEditModal(false);
-            }}
-          >
-            <Text.Bold style={modalStyles.secondaryBtnText}>Cancel</Text.Bold>
           </TouchableOpacity>
         </View>
       </View>
@@ -137,11 +137,13 @@ const modalStyles = StyleSheet.create({
     alignSelf: "flex-end",
     padding: 12,
     marginTop: 8,
-    backgroundColor: "#548af0",
+    backgroundColor: "#edf1f7",
     borderRadius: 6,
+    borderColor: "#c4c2c2",
+    borderWidth: 1,
   },
   secondaryBtnText: {
     fontSize: 20,
-    color: "white",
+    color: "black",
   },
 });
