@@ -9,6 +9,8 @@ export const Context = createContext();
 export function ContextProvider({ children }) {
   const [todos, setTodos] = useState([]);
   const [showClearTodosBtn, setShowClearTodosBtn] = useState(true);
+  const [showClearCompletedTodosBtn, setShowClearCompletedTodosBtn] =
+    useState(true);
   const [showTodoEditModal, setShowTodoEditModal] = useState(false);
   const [selectedEditTodo, setSelectedEditTodo] = useState(null);
 
@@ -26,6 +28,8 @@ export function ContextProvider({ children }) {
         todos,
         setTodos,
         showClearTodosBtn,
+        setShowClearTodosBtn,
+        showClearCompletedTodosBtn,
         setShowClearTodosBtn,
         showTodoEditModal,
         setShowTodoEditModal,
@@ -136,6 +140,31 @@ export function useTodos() {
     ]);
   }
 
+  function deletedAllCompletedTodos() {
+    Alert.alert(
+      "Delete All Completed Todos",
+      "Do you really want to delete all?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            const unCompletedTodos = todos.filter((t) => !t.isCompleted);
+            setTodos(unCompletedTodos);
+            await AsyncStorage.setItem(
+              TODOS_STORAGE_KEY,
+              JSON.stringify(unCompletedTodos)
+            );
+          },
+          style: "destructive",
+        },
+      ]
+    );
+  }
+
   return {
     todos,
     setTodos,
@@ -146,7 +175,8 @@ export function useTodos() {
     addTodo,
     updateTodo,
     setTodoCompleted,
-    deleteAllTodos,
     deleteTodo,
+    deleteAllTodos,
+    deletedAllCompletedTodos,
   };
 }
