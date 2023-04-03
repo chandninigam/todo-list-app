@@ -17,16 +17,21 @@ export function TodoEditModal() {
     addTodo,
     updateTodo,
   } = useTodos();
-  const [todoTitle, setTodoTitle] = useState(selectedEditTodo?.title || "");
-  const [todoDescription, setTodoDescription] = useState(
-    selectedEditTodo?.description || ""
-  );
+
+  const [todoTitle, setTodoTitle] = useState("");
+  const [todoDescription, setTodoDescription] = useState("");
 
   return (
-    <Modal isVisible={showTodoEditModal}>
+    <Modal
+      isVisible={showTodoEditModal}
+      // on modal show on the screen
+      onModalWillShow={() => {
+        setTodoTitle(selectedEditTodo?.title || "");
+        setTodoDescription(selectedEditTodo?.description || "");
+      }}
+    >
       <View style={modalStyles.wrapper}>
         <TextInput
-          // value={selectedEditTodo?.title}
           value={todoTitle}
           placeholder="Title"
           style={modalStyles.title}
@@ -39,7 +44,6 @@ export function TodoEditModal() {
             editable
             multiline
             numberOfLines={4}
-            // value={selectedEditTodo?.description}
             value={todoDescription}
             placeholder="Add Description"
             style={modalStyles.descriptionText}
@@ -56,12 +60,12 @@ export function TodoEditModal() {
               if (selectedEditTodo) {
                 // upadte existing todo
                 updateTodo(selectedEditTodo, {
-                  title: "updating",
-                  description: "updating description",
+                  title: todoTitle,
+                  description: todoDescription,
                 });
               } else {
                 // save new todo
-                addTodo({ title: "test12", description: "test12" });
+                addTodo({ title: todoTitle, description: todoDescription });
               }
             }}
           >
