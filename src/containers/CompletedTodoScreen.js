@@ -2,9 +2,12 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import LottieView from "../components/LottieView";
+// Import Containers
+import { TodoEditModal } from "./TodoEditModal";
+// Import Components
+import CompletedTodoCard from "../components/CompletedTodoCard";
 // Import Custom Hook
 import { useTodos } from "../contexts/AppContext";
-import CompletedTodoCard from "../components/CompletedTodoCard";
 
 export function CompletedTodoScreen() {
   const [isAnyCompletedTodo, setIsAnyCompletedTodo] = useState(false);
@@ -26,6 +29,7 @@ export function CompletedTodoScreen() {
 
   return (
     <View style={completeTabStyle.completedTodoScreenContainer}>
+      <TodoEditModal editable={false} />
       {isAnyCompletedTodo === true ? (
         <LottieView
           path={require("../../assets/animations/thinking-man.json")}

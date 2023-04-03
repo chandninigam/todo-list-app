@@ -1,26 +1,36 @@
 // Import Libraries
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign as AntDesignIcon } from "@expo/vector-icons";
+import { useTodos } from "../contexts/AppContext";
 
 export default function CompletedTodoCard({ item }) {
+  const { setShowTodoEditModal, setSelectedEditTodo } = useTodos();
+
   if (item.isCompleted) {
     return (
-      <View key={item.dateCompleted} style={completedTodoCard.cardWrapper}>
-        <View style={completedTodoCard.cardTitleIconWrapper}>
-          <Text.Regular style={completedTodoCard.cardTitle}>
-            {item.title}
+      <TouchableOpacity
+        onPress={() => {
+          setShowTodoEditModal(true);
+          setSelectedEditTodo(item);
+        }}
+      >
+        <View key={item.dateCompleted} style={completedTodoCard.cardWrapper}>
+          <View style={completedTodoCard.cardTitleIconWrapper}>
+            <Text.Regular style={completedTodoCard.cardTitle}>
+              {item.title}
+            </Text.Regular>
+            <AntDesignIcon name="checkcircle" size={24} color="green" />
+          </View>
+          <Text.Regular style={completedTodoCard.cardCompletedText}>
+            Completed on:
+            {` ${new Date(item.dateCompleted).getDate()}-${new Date(
+              item.dateCompleted
+            ).toLocaleString("default", {
+              month: "long",
+            })}`}
           </Text.Regular>
-          <AntDesignIcon name="checkcircle" size={24} color="green" />
         </View>
-        <Text.Regular style={completedTodoCard.cardCompletedText}>
-          Completed on:
-          {` ${new Date(item.dateCompleted).getDate()}-${new Date(
-            item.dateCompleted
-          ).toLocaleString("default", {
-            month: "long",
-          })}`}
-        </Text.Regular>
-      </View>
+      </TouchableOpacity>
     );
   }
   return null;
