@@ -36,7 +36,7 @@ export function TodoListScreen(props) {
 
   return (
     <View style={styles.todoListScreenWrapper}>
-      <TodoEditModal />
+      <TodoEditModal editable={true} />
       {/* HEADER */}
       <View style={styles.todoListScreenListViewWrapper}>
         {/* Conditonal rendering according to length of todos */}

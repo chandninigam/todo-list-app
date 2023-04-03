@@ -30,6 +30,7 @@ export function ContextProvider({ children }) {
         showClearTodosBtn,
         setShowClearTodosBtn,
         showClearCompletedTodosBtn,
+        setShowClearCompletedTodosBtn,
         setShowClearTodosBtn,
         showTodoEditModal,
         setShowTodoEditModal,

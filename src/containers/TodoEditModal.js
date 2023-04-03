@@ -9,7 +9,7 @@ import {
 import Modal from "react-native-modal";
 import { useTodos } from "../contexts/AppContext";
 
-export function TodoEditModal() {
+export function TodoEditModal({ editable }) {
   const {
     showTodoEditModal,
     setShowTodoEditModal,
@@ -20,6 +20,31 @@ export function TodoEditModal() {
 
   const [todoTitle, setTodoTitle] = useState("");
   const [todoDescription, setTodoDescription] = useState("");
+
+  function PrimaryButton() {
+    return (
+      <TouchableOpacity
+        style={modalStyles.primaryBtn}
+        onPress={() => {
+          setShowTodoEditModal(false);
+          if (selectedEditTodo) {
+            // upadte existing todo
+            updateTodo(selectedEditTodo, {
+              title: todoTitle,
+              description: todoDescription,
+            });
+          } else {
+            // save new todo
+            addTodo({ title: todoTitle, description: todoDescription });
+          }
+        }}
+      >
+        <Text.Bold style={modalStyles.primaryBtnText}>
+          {selectedEditTodo ? "Update" : "Add"}
+        </Text.Bold>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <Modal
@@ -33,6 +58,7 @@ export function TodoEditModal() {
       <View style={modalStyles.wrapper}>
         <TextInput
           value={todoTitle}
+          editable={editable}
           placeholder="Title"
           style={modalStyles.title}
           onChangeText={(value) => {
@@ -41,7 +67,7 @@ export function TodoEditModal() {
         />
         <View style={modalStyles.descriptionWrapper}>
           <TextInput
-            editable
+            editable={editable}
             multiline
             numberOfLines={4}
             value={todoDescription}
@@ -61,26 +87,7 @@ export function TodoEditModal() {
           >
             <Text.Bold style={modalStyles.secondaryBtnText}>Cancel</Text.Bold>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={modalStyles.primaryBtn}
-            onPress={() => {
-              setShowTodoEditModal(false);
-              if (selectedEditTodo) {
-                // upadte existing todo
-                updateTodo(selectedEditTodo, {
-                  title: todoTitle,
-                  description: todoDescription,
-                });
-              } else {
-                // save new todo
-                addTodo({ title: todoTitle, description: todoDescription });
-              }
-            }}
-          >
-            <Text.Bold style={modalStyles.primaryBtnText}>
-              {selectedEditTodo ? "Update" : "Add"}
-            </Text.Bold>
-          </TouchableOpacity>
+          {editable ? <PrimaryButton /> : null}
         </View>
       </View>
     </Modal>
