@@ -61,6 +61,7 @@ export function TodoEditModal({ editable }) {
           editable={editable}
           placeholder="Title"
           style={modalStyles.title}
+          numberOfLines={1}
           onChangeText={(value) => {
             setTodoTitle(value);
           }}
@@ -69,7 +70,6 @@ export function TodoEditModal({ editable }) {
           <TextInput
             editable={editable}
             multiline
-            numberOfLines={4}
             value={todoDescription}
             placeholder="Add Description"
             style={modalStyles.descriptionText}
