@@ -85,7 +85,7 @@ export function TodoEditModal({ editable }) {
               setShowTodoEditModal(false);
             }}
           >
-            <Text.Bold style={modalStyles.secondaryBtnText}>Cancel</Text.Bold>
+            <Text.Bold style={modalStyles.secondaryBtnText}>Close</Text.Bold>
           </TouchableOpacity>
           {editable ? <PrimaryButton /> : null}
         </View>
