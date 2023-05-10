@@ -74,20 +74,7 @@ export function TodoListScreen(props) {
       </View>
       {/* FOOTER */}
       <AddTodoButton />
-      <Toast
-        config={
-          toastConfig
-          //   {
-          //   success: (props) => (
-          //     <BaseToast
-          //       {...props}
-          //       text1Style={{ fontSize: 20, fontWeight: "400" }}
-          //       style={{ borderLeftColor: "green" }}
-          //     />
-          //   ),
-          // }
-        }
-      />
+      <Toast config={toastConfig} />
     </View>
   );
 }
