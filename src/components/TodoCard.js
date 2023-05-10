@@ -30,10 +30,9 @@ export default function TodoCard({ item }) {
             onPress={() => {
               setTodoCompleted(item);
               Toast.show({
-                type: "success",
-                text1: `Completed ${item.title} task`,
-                position: "bottom",
-                visibilityTime: 1500,
+                visibilityTime: 1000,
+                type: "tomatoToast",
+                props: { text: `Completed ${item.title} task` },
               });
             }}
           />
